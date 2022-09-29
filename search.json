@@ -1,0 +1,198 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Machine Learning 2022",
+    "section": "",
+    "text": "Registrar avances generales del curso de Machine Learning en Data Science"
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "Introducción",
+    "section": "",
+    "text": "Identificar elementos clave de ciencia de datos\nComprender cómo interactúan los elementos algorítmicos para afectar el rendimiento\nComprender cómo elegir algoritmos para diferentes tareas de análisis\nAnalizar los datos de una manera exploratoria y específica\nImplementar y aplicar algoritmos básicos para el aprendizaje supervisado y sin supervisión\nEvaluar con precisión el rendimiento de los algoritmos."
+  },
+  {
+    "objectID": "intro.html#qué-es-data-science",
+    "href": "intro.html#qué-es-data-science",
+    "title": "Introducción",
+    "section": "¿Qué es Data Science?",
+    "text": "¿Qué es Data Science?\n\n\n\nData Science\n\n\n\nAnalytics:\n\nUso de datos y métodos cuantitativos para mejorar la toma de decisiones"
+  },
+  {
+    "objectID": "intro.html#niveles-de-información",
+    "href": "intro.html#niveles-de-información",
+    "title": "Introducción",
+    "section": "Niveles de Información",
+    "text": "Niveles de Información\n\n\n\nNiveles Información"
+  },
+  {
+    "objectID": "intro.html#flujos-de-información",
+    "href": "intro.html#flujos-de-información",
+    "title": "Introducción",
+    "section": "Flujos de Información",
+    "text": "Flujos de Información\n\n\n\nFlujos de Información"
+  },
+  {
+    "objectID": "intro.html#niveles-de-ia",
+    "href": "intro.html#niveles-de-ia",
+    "title": "Introducción",
+    "section": "Niveles de IA",
+    "text": "Niveles de IA\n\nSistemas automáticos\nRedes Neuronales Artificiales\nRobótica Cognitiva"
+  },
+  {
+    "objectID": "intro.html#tipos-de-aprendizaje-automático",
+    "href": "intro.html#tipos-de-aprendizaje-automático",
+    "title": "Introducción",
+    "section": "Tipos de aprendizaje automático",
+    "text": "Tipos de aprendizaje automático\n\n\n\nTipos de ML"
+  },
+  {
+    "objectID": "intro.html#esquema-conceptual",
+    "href": "intro.html#esquema-conceptual",
+    "title": "Introducción",
+    "section": "Esquema conceptual",
+    "text": "Esquema conceptual\n\n\n\nConceptos en Machine Learning"
+  },
+  {
+    "objectID": "C2-Features_engineering.html",
+    "href": "C2-Features_engineering.html",
+    "title": "2  Feature Engineering",
+    "section": "",
+    "text": "Una cantidad correcta de atributos ayudan a crear mejores modelos.\nLos datos de altas dimensiones se vuelven cada vez más dispersos en su espacio.\nLas definiciones de densidad y distancia entre puntos se vuelven menos significativas a mayor numero de atributos.\n\n\n\n\nLa Maldición de la dimensionalidad"
+  },
+  {
+    "objectID": "C2-Features_engineering.html#análisis-exploratorio-de-datos-eda",
+    "href": "C2-Features_engineering.html#análisis-exploratorio-de-datos-eda",
+    "title": "2  Feature Engineering",
+    "section": "2.2 Análisis exploratorio de datos (EDA)",
+    "text": "2.2 Análisis exploratorio de datos (EDA)\nAnálisis del conjunto de datos para resumir sus principales características, mediante métodos estadísticos y visuales.\n\n2.2.1 Objetivos EDA:\n\nDescubrir la estructura subyacente de los datos\nIdentificar variables relevantes Detectar valores atípicos y anomalías Validar supuestos\nGenerar hipótesis a partir de los datos\n\n\n\n\nEjemplo de Análisis exploratorio de datos (EDA)"
+  },
+  {
+    "objectID": "C2-Features_engineering.html#definición-de-ingeniería-de-atributos",
+    "href": "C2-Features_engineering.html#definición-de-ingeniería-de-atributos",
+    "title": "2  Feature Engineering",
+    "section": "2.3 Definición de Ingeniería de Atributos",
+    "text": "2.3 Definición de Ingeniería de Atributos\n\nSelección de atributos:\n\nSelección de un subconjunto de atributos según algún criterio específico.\n\n\n\n\n\nSelección de atributos\n\n\n\nExtracción de atributos:\n\nCreación de nuevos atributos a partir de atributos originales\n\n\n\n\n\nExtracción de atributos\n\n\nPueden hacerse con conocimiento del dominio o algorítmicamente"
+  },
+  {
+    "objectID": "C2-Features_engineering.html#objetivos-de-feature-engineering",
+    "href": "C2-Features_engineering.html#objetivos-de-feature-engineering",
+    "title": "2  Feature Engineering",
+    "section": "2.4 Objetivos de Feature Engineering",
+    "text": "2.4 Objetivos de Feature Engineering\n\nMejorar el desempeño de los modelos:\n\nPoder predictivo\nComplejidad\nTiempo de ejecución\n\nVisualizar los datos\nEliminar el ruido"
+  },
+  {
+    "objectID": "C2-Features_engineering.html#sec-distancias",
+    "href": "C2-Features_engineering.html#sec-distancias",
+    "title": "2  Feature Engineering",
+    "section": "2.5 Distancias",
+    "text": "2.5 Distancias\nUna métrica que mide la distancia entre un par de entidades dados los dos puntos x e y, una función métrica o de distancia debe cumplir las siguientes condiciones:\n\nTabla de Condiciones de Distancias\n\n\nNombre Condición\nCondición\n\n\n\n\nNo negatividad\nd(x,y) >0\n\n\nIdentidad\nd(x,y)=0 <=> x=y\n\n\nSimetría\nd(x,y)=d(y,x)\n\n\nDesigualdad triangular\nd(x,z) <= d(x,y)+d(y,z)\n\n\n\n\n2.5.1 Tipos de Distancias\n\n2.5.1.1 Distancia Euclediana\nSe desprende del teorema de Pitágoras\n\n\n\nDistancia Euclediana\n\n\nd_E(P_1, P_2)=\\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}\n\n\n2.5.1.2 Distancia de Minkowski\nGeneralización de la distancia euclidiana. Sean que p y q vectores m-dimensionales\n\n\n\nFormulación de Distancia de Minkowski\n\n\n\n\n2.5.1.3 Distancia de Mahalanobis\n\n\n\nFórmulación de Distancia de Minkowski\n\n\n\n\n2.5.1.4 Distancia del Coseno\n #### Distancia Suave del Coseno\n\n\n\nDistancia Suave del Coseno\n\n\n\n\n\n2.5.2 Matriz de Distancias\n\n\n\nMatriz de Distancias"
+  },
+  {
+    "objectID": "C2-Features_engineering.html#similitud",
+    "href": "C2-Features_engineering.html#similitud",
+    "title": "2  Feature Engineering",
+    "section": "2.6 Similitud",
+    "text": "2.6 Similitud\nSimilitud:\n\nMide lo parecidos que son dos entidades.\nEs más alto cuando entidades son más parecidas.\n\nDisimilitud\n\nMide cuan diferentes son dos entidades\nMás bajo cuando los objetos son más parecidos\n\n\n\n\nTabla de Similitud y Disimilitud"
+  },
+  {
+    "objectID": "C2-Features_engineering.html#referencias",
+    "href": "C2-Features_engineering.html#referencias",
+    "title": "2  Feature Engineering",
+    "section": "2.7 Referencias:",
+    "text": "2.7 Referencias:\nÍndice de Cálculo de Distancias"
+  },
+  {
+    "objectID": "C3-clusters.html",
+    "href": "C3-clusters.html",
+    "title": "3  Análisis de Cluster",
+    "section": "",
+    "text": "Clusters"
+  },
+  {
+    "objectID": "C3-clusters.html#objetivos",
+    "href": "C3-clusters.html#objetivos",
+    "title": "3  Análisis de Cluster",
+    "section": "3.1 Objetivos",
+    "text": "3.1 Objetivos\nEncontrar algorítmicamente grupos de entidades tales que:\n\nLa similitud intragrupo es alta\nLa similitud entre grupos es baja\n\nLas medidas de distancia y similitud son cruciales en este proceso"
+  },
+  {
+    "objectID": "C3-clusters.html#criterios-para-agrupar",
+    "href": "C3-clusters.html#criterios-para-agrupar",
+    "title": "3  Análisis de Cluster",
+    "section": "3.2 Criterios para agrupar",
+    "text": "3.2 Criterios para agrupar\nExisten varias nociones de clusters basados en:\nDistancias: Cada punto está más cerca de todos los puntos de su grupo que cualquier punto de otro grupo.\nCentroide: Cada punto está más cerca del centro de su grupo que del centro de cualquier otro grupo.\nContigüidad: Cada punto está más cerca de al menos un punto de su grupo que cualquier punto de otro grupo.\nDensidad: Los clusters son regiones de alta densidad separadas por regiones de baja densidad."
+  },
+  {
+    "objectID": "C3-clusters.html#estadístico-de-hopkins",
+    "href": "C3-clusters.html#estadístico-de-hopkins",
+    "title": "3  Análisis de Cluster",
+    "section": "3.3 Estadístico de Hopkins",
+    "text": "3.3 Estadístico de Hopkins\nAntes de agrupar un conjunto de datos, podemos probar si realmente hay clústeres. Necesitamos probar la hipótesis de la existencia de patrones en los datos contra un conjunto de datos distribuidos uniformemente (distribución homogénea).\n\nEvalúa la tendencia de los cluster\nMide si un conjunto de datos contiene cluster naturales\nUtiliza un test estadístico para la aleatoridad espacial\n\nLa estadística de Hopkins se calcula de la siguiente manera:\n\nMuestrea p puntos a partir del conjunto de datos\nGenerar p puntos aleatorios en el mismo espacio\nCalcula H, donde:\n\nw_i: distancia desde el punto aleatorio i hasta el vecino más cercano en los datos originales\nu_i: distancia desde el punto de muestra i hasta el vecino más cercano en los datos originales\n\n\n\n\n\nFormula de Estadístico de Hopkins\n\n\nLos valores de H cercanos a 0,5 indican datos aleatorios, a 1 indica datos altamente agrupados y a 0 indica una distribución uniforme.\n ## Métodos de Detección\nExisten diferentes métodos para detectar clusters:\n\nMétodos aglomerativos (parte de cada punto)\nMétodos divisivos (parte con todos los datos)\nMétodos determinísticos (un punto está asignado a un solo cluster)\nMétodos probabilísticos (prob. de pertenencia)\n\n\n\n\n\nMétodos basados en particiones\n\n\n\n\n\n\nMétodos jerárquicos\n\n\n\n\n\n\nMétodos basados en densidad\n\n\n\n\n\n\nClusters difusos"
+  },
+  {
+    "objectID": "resumen_cluster.html",
+    "href": "resumen_cluster.html",
+    "title": "4  Resumen de Cluster",
+    "section": "",
+    "text": "Clusters"
+  },
+  {
+    "objectID": "resumen_cluster.html#objetivos",
+    "href": "resumen_cluster.html#objetivos",
+    "title": "4  Resumen de Cluster",
+    "section": "4.1 Objetivos",
+    "text": "4.1 Objetivos\nEncontrar algorítmicamente grupos de entidades tales que: 1. La similitud intragrupo es alta 2. La similitud entre grupos es baja\nLas medidas de distancia y similitud son cruciales en este proceso"
+  },
+  {
+    "objectID": "resumen_cluster.html#criterios-para-agrupar",
+    "href": "resumen_cluster.html#criterios-para-agrupar",
+    "title": "4  Resumen de Cluster",
+    "section": "4.2 Criterios para agrupar",
+    "text": "4.2 Criterios para agrupar\nExisten varias nociones de clusters basados en:\nDistancias: Cada punto está más cerca de todos los puntos de su grupo que cualquier punto de otro grupo.\nCentroide: Cada punto está más cerca del centro de su grupo que del centro de cualquier otro grupo.\nContigüidad: Cada punto está más cerca de al menos un punto de su grupo que cualquier punto de otro grupo.\nDensidad: Los clusters son regiones de alta densidad separadas por regiones de baja densidad."
+  },
+  {
+    "objectID": "resumen_cluster.html#preprocesamiento",
+    "href": "resumen_cluster.html#preprocesamiento",
+    "title": "4  Resumen de Cluster",
+    "section": "4.3 Preprocesamiento",
+    "text": "4.3 Preprocesamiento\nLos valores atípicos afectan el desempeño de la mayoría de los modelos.\n\n\n\nValores Atípicos\n\n\nLa escala de los datos también puede jugar en contra.\n\n\n\nProblemas de Escala\n\n\nPor lo tanto, es necesario pre procesar los datos:\n\nNormalizar los datos (Distribución normal estandar media 0 y desviación estandar 1)\n\n\\frac{x-\\bar{x}}{\\sigma} \\frac{x-\\bar{x}}{max(x)-min(x)}\n\\frac{x-min(x)}{max(x)-min(x)} * Lidiar con valores atípicos\nAlternativas:\n\nSacarlos de los modelos o se le puede asignar un cluster\nAlgoritmos de clustering que admitan outliers, de los que vimos cluster difusos (probabilidad) en especifico puede ser DB-SCAN que trabaja por densidad"
+  },
+  {
+    "objectID": "resumen_cluster.html#post-procesamiento",
+    "href": "resumen_cluster.html#post-procesamiento",
+    "title": "4  Resumen de Cluster",
+    "section": "4.4 Post procesamiento",
+    "text": "4.4 Post procesamiento\nAlgunos problemas se pueden resolver a través de fusión y división de clusters. Métodos tradicionales generan clústeres esféricos.\nLa fusión de clústeres mas pequeños podría mitigar este problema. División de clústeres mas dispersos también mejora el desempeño\n\n\n\nFusiones y Divisiones"
+  },
+  {
+    "objectID": "resumen_cluster.html#evaluación-de-clusters",
+    "href": "resumen_cluster.html#evaluación-de-clusters",
+    "title": "4  Resumen de Cluster",
+    "section": "4.5 Evaluación de clusters",
+    "text": "4.5 Evaluación de clusters\n\nEstadístico de Hopkins {\nInspección visual\nCoeficiente de correlación\nCoeficiente de cohesión\nCoeficiente de separación\nCoeficiente de silueta\n\n\n4.5.1 Estadístico de Hopkins\nAntes de agrupar un conjunto de datos, podemos probar si realmente hay clústeres. Necesitamos probar la hipótesis de la existencia de patrones en los datos contra un conjunto de datos distribuidos uniformemente (distribución homogénea).\n\nEvalúa la tendencia de los cluster\nMide si un conjunto de datos contiene cluster naturales\nUtiliza un test estadístico para la aleatoridad espacial\n\nLa estadística de Hopkins se calcula de la siguiente manera:\n\nMuestrea p puntos a partir del conjunto de datos\nGenerar p puntos aleatorios en el mismo espacio\nCalcula H, donde:\n\nw_i: distancia desde el punto aleatorio i hasta el vecino más cercano en los datos originales\nu_i: distancia desde el punto de muestra i hasta el vecino más cercano en los datos originales\n\n\n\n\n\nFormula de Estadístico de Hopkins\n\n\nLos valores de H cercanos a 0,5 indican datos aleatorios, a 1 indica datos altamente agrupados y a 0 indica una distribución uniforme.\n\n\n\nVisualización Gráfica de Estadístico de Hopkins\n\n\n\n\n4.5.2 Inspección visual\n\nCrear la matriz de distancia\nOrdene la matriz en función de las etiquetas de clúster obtenidas.\nInspeccione visualmente\n\nLas buenas agrupaciones exhiben un patrón de bloque claro con “mismo color”\n\n\n\nInspescción Visual\n\n\n\n\n4.5.3 Coeficiente de correlación\n\nConstruir la matriz de similitud inicial entre todos los puntos s(i,j) = 1 / (1+d(i,j))\nConstruye la matriz de similitud “ideal” basada en la pertenencia al clúster\nCalcule la correlación entre la matriz de similitud inicial y la matriz de similitud “ideal” (los ejes X e Y son la similitud inicial/ideal respectivamente).\nLa alta correlación indica que los puntos del mismo clúster están cerca el uno del otro\n\n\n\n\nCoeficiente de correlación\n\n\n\n\n4.5.4 Coeficiente de cohesión\nMide cuán estrechamente relacionados están los objetos dentro de cada clúster.\n\n\n\nCohesión\n\n\nSuma de errores cuadrados (SSE) es la suma de la distancia cuadrada de un punto al centroide de su clúster.\n\n\n\nFormula de Coeficiente de cohesión\n\n\n\n\n\nEsquema de Coeficiente de cohesión\n\n\n\n\n4.5.5 Coeficiente de separación\nMide cuán distinto es un clúster de los otros clusters.\n\n\n\nCoeficiente de separación\n\n\nLa suma de cuadrados intra grupo (SSB) es la suma de la distancia cuadrada de un centroide de clúster a la media general. Minimizar la cohesión equivale a maximizar la separación.\n\n\n\nFormula de Coeficiente de separación\n\n\n\n\n4.5.6 Coeficiente de silueta\nCombina cohesión y separación. Normalmente varía entre -1 y 1, donde\n\nValores cercanos a 1 implican una mejor agrupación en clústeres.\nValor negativo implica que el punto i está más cerca de otro clúster\n\n\n\n\nGráfico de Coeficiente de silueta\n\n\nPara un punto individual i:\n\nCalcular a_i como la distancia media de i a puntos en el mismo clúster\nCalcule b_{ij} como la distancia media del punto i a todos los puntos del clúster j.\nCalcular b_i como el b_{ij} mínimo excluyendo el clúster propio.\nEl coeficiente de silueta para el punto i es:\n\nS_i =\\frac{(b_i-a_i)}{max(a_i,b_i)}\n\n\n\nTabla de Coeficiente de silueta\n\n\nEl coeficiente de silueta de un clúster es el promedio de los coeficientes de silueta de los puntos pertenecientes."
+  },
+  {
+    "objectID": "resumen_cluster.html#métodos-de-clusterización",
+    "href": "resumen_cluster.html#métodos-de-clusterización",
+    "title": "4  Resumen de Cluster",
+    "section": "4.6 Métodos de Clusterización",
+    "text": "4.6 Métodos de Clusterización\n\n4.6.1 Basados en Particiones\n\n\n\nMétodos basados en particiones\n\n\n\n4.6.1.1 K-medias\n\nUno de los algoritmos de clusters más simples.\nDado un número K de clusters (determinado por el usuario), cada cluster está asociado con un centroide y cada entidad se asigna al cluster con el centroide más cercano.\nVariantes como K-medioides, o K-modas usan otros estadísticos como centroides\n\n\n\n\nK-medias\n\n\n\n\n\nAlgoritmo de K-medias\n\n\n\n\n\nSelección de Centroides K-medias\n\n\n\n\n4.6.1.2 Métodos jerárquicos\nLas entidades se agrupan en una jerarquía de clústeres anidados.\n Los métodos jerárquicos se subdividen en aglomerativos y disociativos. Cada una de estas categorías presenta una gran diversidad de variantes. 1. Los métodos aglomerativos, también conocidos como ascendentes, comienzan el análisis con tantos grupos como individuos haya. A partir de estas unidades iniciales se van formando grupos, de forma ascendente, hasta que al final del proceso todos los casos tratados están englobados en un mismo conglomerado. 2. Los métodos disociativos, también llamados descendentes, constituyen el proceso inverso al anterior. Comienzan con un conglomerado que engloba a todos los casos tratados y, a partir de este grupo inicial, a través de sucesivas divisiones, se van formando grupos cada vez más pequeños. Al final del proceso se tienen tantas agrupaciones como casos han sido tratados.\nAlgoritmo\nEl algoritmo básico para clustering aglomerativo es sencillo:\n\nDeje que cada punto de datos sea un clúster\nCalcular la matriz de proximidad (matriz de distancia entre cada clúster)\nRepetir hasta que sólo quede un solo clúster\n\nFusionar los dos clústeres más cercanos\nActualizar la matriz de proximidad\n\n\nEl paso clave es el cálculo de la proximidad de dos clústeres\nDiferentes enfoques para definir la distancia entre clústeres distinguen los diferentes algoritmos\nDendrogramas\nUn dendrograma es una estructura de tipo árbol que muestra el proceso generativo de agrupación en clústeres. El eje X muestra los puntos de datos originales, mientras que el eje Y podría mostrar la distancia entre clústeres.\n\n\n\nTipos de Dendogramas\n\n\nMétodos de Aglomeración\nA continuación vamos a presentar algunas de las estrategias que pueden ser empleadas a la hora de unir los clusters en las diversas etapas o niveles de un procedimiento jerárquico. Ninguno de estos procedimientos proporciona una solución óptima para todos los problemas que se pueden plantear, ya que es posible llegar a distintos resultados según el método elegido.\n\nSingle linkage:\n\nEsta estrategia recibe en la literatura anglosajona el nombre de amalgamamiento simple (single linkage). En este método se considera que la distancia o similitud entre dos clusters viene dada, respectivamente, por la mínima distancia (o máxima similitud) entre sus componentes.\n\nComplete linkage:\n\nEn este método, también conocido como el procedimiento de amalgamamiento completo (complete linkage), se considera que la distancia o similitud entre dos clusters hay que medirla atendiendo a sus elementos más dispares, o sea, la distancia o similitud entre clusters viene dada, respectivamente, por la máxima distancia (o mínima similitud) entre sus componentes.\n\nAverage linkage:\n\nEn esta estrategia la distancia, o similitud, del cluster C_i con el C_j se obtiene como la media aritmética entre la distancia, o similitud, de las componentes de dichos clusters.\n\n\n\n\n\nMétodos de Aglomeración\n\n\nDesventajas\n\nEl algoritmo es demasiado caro O(n3): Hay n pasos, para unir clústeres, y en cada paso calculamos la matriz de proximidad O(n2).\nUna vez que se toma la decisión de combinar dos grupos, no se puede revertir\nNinguna función objetivo se minimiza directamente\n\n\n\n\n4.6.2 Clusters difusos\nCada punto tiene un probabilidad de pertenecer a cada clúster.\n\n\n\nEjemplo de Clusters difusos\n\n\n\n4.6.2.1 Coeficiente de partición difusa (FPC)\nEl coeficiente de partición difuso evalúa la variabilidad de las asignaciones.\nF(U)= \\frac{tr(U*U^T)}{n}\nDonde U es la matriz de pertenencia, * es el operador de multiplicación entre matrices, y tr( ) es la traza de la matriz, es decir, la suma de los valores diagonales.\nEl coeficiente de partición difusa varía entre 0 y 1 donde un valor cercano a 1 implica menor variabilidad en la matriz de pertenencia, que se asocia a una mejor clusterización de los datos.\n\n\n\nValores de Coeficiente de partición difusa y su representación gráfica\n\n\n\n\n4.6.2.2 Gaussian Mixed Models\nUn modelo de mezcla gaussiana (GMM) asume que los datos se generaron a partir de una mezcla de K gaussianos multidimensionales, donde cada componente tiene parámetros: N_k(\\mu_k,\\Sigma_k)\n\nK es definido por el usuario.*\n\n\n\n\nRepresenación Gráfica Gaussian Mixed Models\n\n\nGaussiono Multivariado\n\n\n\nGaussionao Multivariado\n\n\n Algoritmo\n\n\n\nAlgoritmo GMM"
+  },
+  {
+    "objectID": "resumen_cluster.html#referencias",
+    "href": "resumen_cluster.html#referencias",
+    "title": "4  Resumen de Cluster",
+    "section": "4.7 Referencias",
+    "text": "4.7 Referencias\nMétodos Jerárquicos de Análisis Cluster."
+  },
+  {
+    "objectID": "summary.html",
+    "href": "summary.html",
+    "title": "5  Summary",
+    "section": "",
+    "text": "In summary, this book has no content whatsoever."
+  }
+]

@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Machine Learning 2022 - 3&nbsp; Análisis de Cluster</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./resumen_cluster.html" rel="next">
+<link href="./C2-Features_engineering.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<link rel="stylesheet" href="style/style.css">
+</head>
+
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Análisis de Cluster</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Machine Learning 2022</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Prefacio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">Introducción</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C2-Features_engineering.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Feature Engineering</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C3-clusters.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Análisis de Cluster</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resumen_cluster.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Resumen de Cluster</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summary</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#objetivos" id="toc-objetivos" class="nav-link active" data-scroll-target="#objetivos"> <span class="header-section-number">3.1</span> Objetivos</a></li>
+  <li><a href="#criterios-para-agrupar" id="toc-criterios-para-agrupar" class="nav-link" data-scroll-target="#criterios-para-agrupar"> <span class="header-section-number">3.2</span> Criterios para agrupar</a></li>
+  <li><a href="#estadístico-de-hopkins" id="toc-estadístico-de-hopkins" class="nav-link" data-scroll-target="#estadístico-de-hopkins"> <span class="header-section-number">3.3</span> Estadístico de Hopkins</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Análisis de Cluster</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/clusters.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Clusters</figcaption><p></p>
+</figure>
+</div>
+<section id="objetivos" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="objetivos"><span class="header-section-number">3.1</span> Objetivos</h2>
+<p>Encontrar algorítmicamente grupos de entidades tales que:</p>
+<ol type="1">
+<li>La similitud intragrupo es alta</li>
+<li>La similitud entre grupos es baja</li>
+</ol>
+<p><em>Las medidas de distancia y similitud son cruciales en este proceso</em></p>
+</section>
+<section id="criterios-para-agrupar" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="criterios-para-agrupar"><span class="header-section-number">3.2</span> Criterios para agrupar</h2>
+<p>Existen varias nociones de clusters basados en:</p>
+<p><strong>Distancias</strong>: Cada punto está más cerca de todos los puntos de su grupo que cualquier punto de otro grupo.</p>
+<p><strong>Centroide</strong>: Cada punto está más cerca del centro de su grupo que del centro de cualquier otro grupo.</p>
+<p><strong>Contigüidad</strong>: Cada punto está más cerca de al menos un punto de su grupo que cualquier punto de otro grupo.</p>
+<p><strong>Densidad</strong>: Los clusters son regiones de alta densidad separadas por regiones de baja densidad.</p>
+</section>
+<section id="estadístico-de-hopkins" class="level2 page-columns page-full" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="estadístico-de-hopkins"><span class="header-section-number">3.3</span> Estadístico de Hopkins</h2>
+<p>Antes de agrupar un conjunto de datos, podemos probar si realmente hay clústeres. Necesitamos probar la hipótesis de la existencia de patrones en los datos <strong>contra</strong> un conjunto de datos distribuidos uniformemente (distribución homogénea).</p>
+<ul>
+<li>Evalúa la tendencia de los cluster</li>
+<li>Mide si un conjunto de datos contiene cluster naturales</li>
+<li>Utiliza un test estadístico para la aleatoridad espacial</li>
+</ul>
+<p>La estadística de Hopkins se calcula de la siguiente manera:</p>
+<ol type="1">
+<li>Muestrea <span class="math inline">p</span> puntos a partir del conjunto de datos</li>
+<li>Generar <span class="math inline">p</span> puntos aleatorios en el mismo espacio</li>
+<li>Calcula <span class="math inline">H</span>, donde:
+<ul>
+<li><span class="math inline">w_i</span>: distancia desde el punto aleatorio i hasta el vecino más cercano en los datos originales</li>
+<li><span class="math inline">u_i</span>: distancia desde el punto de muestra i hasta el vecino más cercano en los datos originales</li>
+</ul></li>
+</ol>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/f-hopkins.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Formula de Estadístico de Hopkins</figcaption><p></p>
+</figure>
+</div>
+<p>Los valores de H cercanos a 0,5 indican datos aleatorios, a 1 indica datos altamente agrupados y a 0 indica una distribución uniforme.</p>
+<p><img src="images/hopkins.png" class="img-fluid" alt="Visualización Gráfica de Estadístico de Hopkins"> ## Métodos de Detección</p>
+<p>Existen diferentes métodos para detectar clusters:</p>
+<ul>
+<li>Métodos aglomerativos (parte de cada punto)</li>
+<li>Métodos divisivos (parte con todos los datos)</li>
+<li>Métodos determinísticos (un punto está asignado a un solo cluster)</li>
+<li>Métodos probabilísticos (prob. de pertenencia)</li>
+</ul>
+<!-- ### Métodos basados en particiones -->
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/m_particiones.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Métodos basados en particiones</figcaption><p></p>
+</figure>
+</div>
+<!-- ### Métodos jerárquicos -->
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/m-jerarquicos.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Métodos jerárquicos</figcaption><p></p>
+</figure>
+</div>
+<!-- ### Métodos basados en densidad -->
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/m-densidad.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Métodos basados en densidad</figcaption><p></p>
+</figure>
+</div>
+<!-- ### Clusters difusos -->
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/c-difusos.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Clusters difusos</figcaption><p></p>
+</figure>
+</div>
+<!-- ```{r setup, include=FALSE} -->
+<!-- knitr::opts_chunk$set(echo = TRUE) -->
+<!-- ``` -->
+<!-- ## Librerías -->
+<!-- ```{r} -->
+<!-- pacman::p_load(magick, tidyverse, factoextra, umap) -->
+<!-- set.seed(42) -->
+<!-- ``` -->
+<!-- ## Lectura de Insumos -->
+<!-- Datos de Fútbol -->
+<!-- ```{r} -->
+<!-- data_raw <- read_rds("../data-science/data/partidos_futbol.rds") -->
+<!-- ``` -->
+<!-- ## Procesamiento de datos -->
+<!-- ```{r} -->
+<!-- # analisis de clusters naturales ---- -->
+<!-- data <- data_raw %>%  -->
+<!--   select(where(is.numeric), -formationUsed) %>%  -->
+<!--   drop_na() -->
+<!-- ``` -->
+<!-- ## Estadistico de Hopkins -->
+<!-- Antes de agrupar un conjunto de datos, podemos probar si realmente hay clústeres. Necesitamos probar la hipótesis de la existencia de patrones en los datos contra un conjunto de datos distribuidos uniformemente (distribución homogénea). -->
+<!-- - Evalúa la tendencia de los cluster -->
+<!-- - Mide si un conjunto de datos contiene cluster naturales -->
+<!-- - Utiliza un test estadístico para la aleatoridad espacial -->
+<!-- La estadística de Hopkins se calcula de la siguiente manera: -->
+<!-- 1. Muestre n puntos (p_i) del conjunto de datos (D) de manera uniforme y calcule la distancia a su vecino más cercano (d (p_i)) -->
+<!-- 2. Genere n puntos (q_i) distribuidos uniformemente en el espacio del conjunto de datos y calcule su distancia a los vecinos más cercanos en D (d (q_i)) -->
+<!-- 3. Calcula el cociente H: -->
+<!-- ```{r} -->
+<!-- get_clust_tendency(data, n = 30, graph = FALSE) -->
+<!-- ``` -->
+<!-- ## Umap  -->
+<!-- Preservar estructura local en los datos e ignorar las muy lejanas. -->
+<!-- Calcula una aproximación y una proyección de un conjunto de datos -->
+<!-- ```{r} -->
+<!-- model.umap <- umap(data) -->
+<!-- data.umap <-  -->
+<!--   model.umap$layout %>%  -->
+<!--   as.data.frame() -->
+<!-- ``` -->
+<!-- Estadistico de Hopkins -->
+<!-- ```{r} -->
+<!-- get_clust_tendency(data.umap, n = 30, graph = FALSE) -->
+<!-- ``` -->
+<!-- ## Visualización -->
+<!-- ```{r} -->
+<!-- ggplot(data.umap, aes(V1, V2)) +  -->
+<!--   geom_point() -->
+<!-- ``` -->
+<!-- ## Kmeans propio -->
+<!-- Programar la función -->
+<!-- ```{r} -->
+<!-- kmedias <- function(data, k, itermax = 10){ -->
+<!--   # defino los centroides aleatoriamente seleccionando una muestra de la data recibida -->
+<!--   centroids <- data[sample(1:nrow(data), k),] -->
+<!--   # creo 2 variables auxiliares del mismo largo que me permitiran comparar si el algoritmo convergio -->
+<!--   cluster <- 1:nrow(data) -->
+<!--   cluster_iter <- cluster*0 -->
+<!--   # creo un for para iterar hasta las iteraciones maximas -->
+<!--   for(i in 1:itermax){ -->
+<!--     if(!mean(cluster_iter == cluster)==1){ # si el algoritmo aun no converge -->
+<!--       # calculo distancia de puntos con centroides de acuerdo a funcion -->
+<!--       distk <- sqrt(matrix(rowSums(expand.grid(rowSums(centroids*centroids),rowSums(data*data))), # hago calculo de producto punto enntre matrices -->
+<!--                            nrow=nrow(centroids)) - # calculo el tamaño de la matriz resultante -->
+<!--                       2. * as.matrix(centroids) %*% t(as.matrix(data))) -->
+<!--       cluster_iter <- cluster # reasigno la variable auxiliar al cluster obtenido en la iteracion anterior -->
+<!--       cluster <- apply(distk, 2, function(x) which(x==min(x))[1]) # identifico el cluster mas cercano a cada punto -->
+<!--       dist_min <- apply(distk, 2, function(x) min(x)) # identifico la distancia minima al cluster mas cercano -->
+<!--       output <- data.frame(dist_min, data, cluster) # construyo salida del modelo juntando la data con sus clusters asignados -->
+<!--       dist_clusts <- aggregate(.~cluster, output, mean) # agrego los datos por clusters obteniendo coordenadas y distancias medias -->
+<!--       centroids <- dist_clusts[,-(1:2)] # redefino los centroides  -->
+<!--     }  -->
+<!--   } -->
+<!--   return(list("clusters" = cluster, "centroides" = centroids)) # funcion devuelve una lista con los clusters de cada punto y con los centroides -->
+<!-- } -->
+<!-- ``` -->
+<!-- Evaluar rendimiento comparando `kmedias` creada anteriormente con `kmean` de R base  -->
+<!-- ```{r} -->
+<!-- # comparacion con algoritmo nativo kmeans ---- -->
+<!-- tictoc::tic() -->
+<!-- modelo1 <- kmedias(data.umap, k = 12) -->
+<!-- tictoc::toc() -->
+<!-- tictoc::tic() -->
+<!-- modelo2 <- kmeans(data.umap, 12) -->
+<!-- tictoc::toc() -->
+<!-- ``` -->
+<!-- Visualización de Resultados -->
+<!-- ```{r} -->
+<!-- library(patchwork) -->
+<!-- p1 <- ggplot(data.umap, aes(V1, V2, col = factor(modelo1$clusters))) + -->
+<!--   geom_point() + -->
+<!--   theme(legend.position = "bottom", -->
+<!--         legend.title = element_blank()) -->
+<!-- p2 <- ggplot(data.umap, aes(V1, V2, col = factor(modelo2$cluster))) + -->
+<!--   geom_point() + -->
+<!--   theme(legend.position = "bottom", -->
+<!--         legend.title = element_blank()) -->
+<!-- p1 + p2 -->
+<!-- ``` -->
+<!-- ## Aplicación K-Means a una Imagen -->
+<!-- ```{r} -->
+<!-- # ejemplo imagen UAI ---- -->
+<!-- imagen <- image_read("../data-science/data/uai.jpg") -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- # genero variable con los datos de valores rgb -->
+<!-- imagen_num <- imagen %>%  -->
+<!--   image_data(channels = "rgb") %>%  -->
+<!--   as.numeric() -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- # transformo a color para evaluar numero de colores -->
+<!-- colorvector <- rgb(imagen_num[,,1],  -->
+<!--                    imagen_num[,,2],  -->
+<!--                    imagen_num[,,3],  -->
+<!--                    maxColorValue = 1) -->
+<!-- colorvector  %>%  unique() %>%  length() -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- # creo dataframe con columnas rgb -->
+<!-- colors_df <-  -->
+<!--   col2rgb(colorvector) %>%  -->
+<!--   t() %>%  -->
+<!--   as_tibble() -->
+<!-- colors_df %>% head() -->
+<!-- ``` -->
+<!-- ### simplifico colores redondeando -->
+<!-- ```{r} -->
+<!-- # simplifico colores redondeando -->
+<!-- # redondeo los colores para llegar a 30 colores -->
+<!-- n <- 55 -->
+<!-- t_colors_df <- floor(colors_df/n)*n -->
+<!-- # creo vector de colores transformado -->
+<!-- t_colorvector <- rgb(t_colors_df/255) -->
+<!-- t_colorvector  %>%  unique() %>%  length() -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- # creo una copia de la matriz original y la relleno con los valores tranformados -->
+<!-- t_imagen_num <- imagen_num -->
+<!-- t_imagen_num[,,1] <- t_colors_df$red/255 -->
+<!-- t_imagen_num[,,2] <- t_colors_df$green/255 -->
+<!-- t_imagen_num[,,3] <- t_colors_df$blue/255 -->
+<!-- # dibujo la imagen original y la transformada -->
+<!-- par(mfrow=c(2,1), cex=0.7, mai=c(0,0,0,0)) -->
+<!-- plot(c(100, 150), c(300, 350), type = "n", xlab = "", ylab = "", bty="n", axes=F) -->
+<!-- graphics::rasterImage(imagen_num,  100, 300, 150, 350, interpolate = FALSE) -->
+<!-- plot(c(100, 150), c(300, 350), type = "n", xlab = "", ylab = "", bty="n", axes=F) -->
+<!-- graphics::rasterImage(t_imagen_num,  100, 300, 150, 350, interpolate = FALSE) -->
+<!-- ``` -->
+<!-- ### Kmeans -->
+<!-- ```{r} -->
+<!-- # genero un modelo de kmeans con 30 centroides -->
+<!-- modelo_kmeans <- kmeans(colors_df, 30, iter.max  = 20) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- # extraigo los centroides y genero columna cluster -->
+<!-- centroides <-  -->
+<!--   modelo_kmeans$centers %>%  -->
+<!--   as_tibble() %>%  -->
+<!--   mutate(cluster = 1:30) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- # extraigo los clusters de cada punto y creo una tabla para almacenarlos -->
+<!-- t_colors_df_kmeans <-  -->
+<!--   tibble(cluster = modelo_kmeans$cluster) %>%  -->
+<!--   inner_join(centroides, by = "cluster") -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- # creo una copia de la imagen original y reemplazo valores por centroides obtenidos -->
+<!-- t_imagen_num_kmeans <- imagen_num -->
+<!-- t_imagen_num_kmeans[,,1] <- t_colors_df_kmeans$red/255 -->
+<!-- t_imagen_num_kmeans[,,2] <- t_colors_df_kmeans$green/255 -->
+<!-- t_imagen_num_kmeans[,,3] <- t_colors_df_kmeans$blue/255 -->
+<!-- # dibujo la imagen original, y las 2 transformadas -->
+<!-- par(mfrow=c(3,1), cex=0.7, mai=c(0,0,0,0)) -->
+<!-- plot(c(100, 150), c(300, 350), type = "n", xlab = "", ylab = "", bty="n", axes=F) -->
+<!-- graphics::rasterImage(imagen_num,  100, 300, 150, 350, interpolate = FALSE) -->
+<!-- plot(c(100, 150), c(300, 350), type = "n", xlab = "", ylab = "", bty="n", axes=F) -->
+<!-- graphics::rasterImage(t_imagen_num,  100, 300, 150, 350, interpolate = FALSE) -->
+<!-- plot(c(100, 150), c(300, 350), type = "n", xlab = "", ylab = "", bty="n", axes=F) -->
+<!-- graphics::rasterImage(t_imagen_num_kmeans,  100, 300, 150, 350, interpolate = FALSE) -->
+<!-- ``` -->
+<!-- ### Kmedias -->
+<!-- ```{r} -->
+<!-- # corro el modelo con las mismas condiciones del kmeans -->
+<!-- modelo_kmedias_artesanal <- kmedias(colors_df, 30, itermax = 20) -->
+<!-- centroides_artesa <-  -->
+<!--   modelo_kmedias_artesanal$centroides %>%  -->
+<!--   as_tibble() %>%  -->
+<!--   mutate(clusters = 1:30) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- t_colors_df_kmeans_art <-  -->
+<!--   tibble(clusters = modelo_kmedias_artesanal$clusters) %>%  -->
+<!--   inner_join(centroides_artesa, by = "clusters") -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- t_imagen_num_kmeans_art <- imagen_num -->
+<!-- t_imagen_num_kmeans_art[,,1] <- t_colors_df_kmeans_art$red/255 -->
+<!-- t_imagen_num_kmeans_art[,,2] <- t_colors_df_kmeans_art$green/255 -->
+<!-- t_imagen_num_kmeans_art[,,3] <- t_colors_df_kmeans_art$blue/255 -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- par(mfrow=c(4,1), cex=0.7, mai=c(0,0,0,0)) -->
+<!-- plot(c(100, 150), c(300, 350), type = "n", xlab = "", ylab = "", bty="n", axes=F) -->
+<!-- graphics::rasterImage(imagen_num,  100, 300, 150, 350, interpolate = FALSE) -->
+<!-- plot(c(100, 150), c(300, 350), type = "n", xlab = "", ylab = "", bty="n", axes=F) -->
+<!-- graphics::rasterImage(t_imagen_num,  100, 300, 150, 350, interpolate = FALSE) -->
+<!-- plot(c(100, 150), c(300, 350), type = "n", xlab = "", ylab = "", bty="n", axes=F) -->
+<!-- graphics::rasterImage(t_imagen_num_kmeans,  100, 300, 150, 350, interpolate = FALSE) -->
+<!-- plot(c(100, 150), c(300, 350), type = "n", xlab = "", ylab = "", bty="n", axes=F) -->
+<!-- graphics::rasterImage(t_imagen_num_kmeans_art,  100, 300, 150, 350, interpolate = FALSE) -->
+<!-- ``` -->
+<!-- https://rpubs.com/Joaquin_AR/310338 -->
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./C2-Features_engineering.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Feature Engineering</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./resumen_cluster.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Resumen de Cluster</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright 2022, Denis Berroeta</div>   
+  </div>
+</footer>
+
+
+
+</body></html>

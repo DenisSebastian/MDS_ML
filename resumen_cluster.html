@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Machine Learning 2022 - 4&nbsp; Resumen de Cluster</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./summary.html" rel="next">
+<link href="./C3-clusters.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<link rel="stylesheet" href="style/style.css">
+</head>
+
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Resumen de Cluster</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Machine Learning 2022</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Prefacio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">Introducción</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C2-Features_engineering.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Feature Engineering</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C3-clusters.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Análisis de Cluster</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resumen_cluster.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Resumen de Cluster</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summary</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#objetivos" id="toc-objetivos" class="nav-link active" data-scroll-target="#objetivos"> <span class="header-section-number">4.1</span> Objetivos</a></li>
+  <li><a href="#criterios-para-agrupar" id="toc-criterios-para-agrupar" class="nav-link" data-scroll-target="#criterios-para-agrupar"> <span class="header-section-number">4.2</span> Criterios para agrupar</a></li>
+  <li><a href="#preprocesamiento" id="toc-preprocesamiento" class="nav-link" data-scroll-target="#preprocesamiento"> <span class="header-section-number">4.3</span> Preprocesamiento</a></li>
+  <li><a href="#post-procesamiento" id="toc-post-procesamiento" class="nav-link" data-scroll-target="#post-procesamiento"> <span class="header-section-number">4.4</span> Post procesamiento</a></li>
+  <li><a href="#evaluación-de-clusters" id="toc-evaluación-de-clusters" class="nav-link" data-scroll-target="#evaluación-de-clusters"> <span class="header-section-number">4.5</span> Evaluación de clusters</a>
+  <ul class="collapse">
+  <li><a href="#estadístico-de-hopkins" id="toc-estadístico-de-hopkins" class="nav-link" data-scroll-target="#estadístico-de-hopkins"> <span class="header-section-number">4.5.1</span> Estadístico de Hopkins</a></li>
+  <li><a href="#inspección-visual" id="toc-inspección-visual" class="nav-link" data-scroll-target="#inspección-visual"> <span class="header-section-number">4.5.2</span> Inspección visual</a></li>
+  <li><a href="#coeficiente-de-correlación" id="toc-coeficiente-de-correlación" class="nav-link" data-scroll-target="#coeficiente-de-correlación"> <span class="header-section-number">4.5.3</span> Coeficiente de correlación</a></li>
+  <li><a href="#coeficiente-de-cohesión" id="toc-coeficiente-de-cohesión" class="nav-link" data-scroll-target="#coeficiente-de-cohesión"> <span class="header-section-number">4.5.4</span> Coeficiente de cohesión</a></li>
+  <li><a href="#coeficiente-de-separación" id="toc-coeficiente-de-separación" class="nav-link" data-scroll-target="#coeficiente-de-separación"> <span class="header-section-number">4.5.5</span> Coeficiente de separación</a></li>
+  <li><a href="#coeficiente-de-silueta" id="toc-coeficiente-de-silueta" class="nav-link" data-scroll-target="#coeficiente-de-silueta"> <span class="header-section-number">4.5.6</span> Coeficiente de silueta</a></li>
+  </ul></li>
+  <li><a href="#métodos-de-clusterización" id="toc-métodos-de-clusterización" class="nav-link" data-scroll-target="#métodos-de-clusterización"> <span class="header-section-number">4.6</span> Métodos de Clusterización</a>
+  <ul class="collapse">
+  <li><a href="#basados-en-particiones" id="toc-basados-en-particiones" class="nav-link" data-scroll-target="#basados-en-particiones"> <span class="header-section-number">4.6.1</span> Basados en Particiones</a></li>
+  <li><a href="#clusters-difusos" id="toc-clusters-difusos" class="nav-link" data-scroll-target="#clusters-difusos"> <span class="header-section-number">4.6.2</span> Clusters difusos</a></li>
+  </ul></li>
+  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias"> <span class="header-section-number">4.7</span> Referencias</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Resumen de Cluster</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/clusters.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Clusters</figcaption><p></p>
+</figure>
+</div>
+<section id="objetivos" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="objetivos"><span class="header-section-number">4.1</span> Objetivos</h2>
+<p>Encontrar algorítmicamente grupos de entidades tales que: 1. La similitud intragrupo es alta 2. La similitud entre grupos es baja</p>
+<p><em>Las medidas de distancia y similitud son cruciales en este proceso</em></p>
+</section>
+<section id="criterios-para-agrupar" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="criterios-para-agrupar"><span class="header-section-number">4.2</span> Criterios para agrupar</h2>
+<p>Existen varias nociones de clusters basados en:</p>
+<p><strong>Distancias</strong>: Cada punto está más cerca de todos los puntos de su grupo que cualquier punto de otro grupo.</p>
+<p><strong>Centroide</strong>: Cada punto está más cerca del centro de su grupo que del centro de cualquier otro grupo.</p>
+<p><strong>Contigüidad</strong>: Cada punto está más cerca de al menos un punto de su grupo que cualquier punto de otro grupo.</p>
+<p><strong>Densidad</strong>: Los clusters son regiones de alta densidad separadas por regiones de baja densidad.</p>
+</section>
+<section id="preprocesamiento" class="level2 page-columns page-full" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="preprocesamiento"><span class="header-section-number">4.3</span> Preprocesamiento</h2>
+<p>Los valores atípicos afectan el desempeño de la mayoría de los modelos.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/outliers.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Valores Atípicos</figcaption><p></p>
+</figure>
+</div>
+<p>La escala de los datos también puede jugar en contra.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/problema-escala.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Problemas de Escala</figcaption><p></p>
+</figure>
+</div>
+<p>Por lo tanto, es necesario pre procesar los datos:</p>
+<ul>
+<li>Normalizar los datos (Distribución normal estandar media 0 y desviación estandar 1)</li>
+</ul>
+<p><span class="math display">\frac{x-\bar{x}}{\sigma}</span> <span class="math display">\frac{x-\bar{x}}{max(x)-min(x)}</span></p>
+<p><span class="math display">\frac{x-min(x)}{max(x)-min(x)}</span> * Lidiar con valores atípicos</p>
+<p>Alternativas:</p>
+<ul>
+<li><p>Sacarlos de los modelos o se le puede asignar un cluster</p></li>
+<li><p>Algoritmos de clustering que admitan outliers, de los que vimos cluster difusos (probabilidad) en especifico puede ser DB-SCAN que trabaja por densidad</p></li>
+</ul>
+</section>
+<section id="post-procesamiento" class="level2 page-columns page-full" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="post-procesamiento"><span class="header-section-number">4.4</span> Post procesamiento</h2>
+<p>Algunos problemas se pueden resolver a través de fusión y división de clusters. Métodos tradicionales generan clústeres esféricos.</p>
+<p>La <strong>fusión</strong> de clústeres mas pequeños podría mitigar este problema. <strong>División</strong> de clústeres mas dispersos también mejora el desempeño</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/postproceso.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Fusiones y Divisiones</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="evaluación-de-clusters" class="level2 page-columns page-full" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="evaluación-de-clusters"><span class="header-section-number">4.5</span> Evaluación de clusters</h2>
+<ul>
+<li>Estadístico de Hopkins {</li>
+<li>Inspección visual</li>
+<li>Coeficiente de correlación</li>
+<li>Coeficiente de cohesión</li>
+<li>Coeficiente de separación</li>
+<li>Coeficiente de silueta</li>
+</ul>
+<section id="estadístico-de-hopkins" class="level3 page-columns page-full" data-number="4.5.1">
+<h3 data-number="4.5.1" class="anchored" data-anchor-id="estadístico-de-hopkins"><span class="header-section-number">4.5.1</span> Estadístico de Hopkins</h3>
+<p>Antes de agrupar un conjunto de datos, podemos probar si realmente hay clústeres. Necesitamos probar la hipótesis de la existencia de patrones en los datos <strong>contra</strong> un conjunto de datos distribuidos uniformemente (distribución homogénea).</p>
+<ul>
+<li>Evalúa la tendencia de los cluster</li>
+<li>Mide si un conjunto de datos contiene cluster naturales</li>
+<li>Utiliza un test estadístico para la aleatoridad espacial</li>
+</ul>
+<p>La estadística de Hopkins se calcula de la siguiente manera:</p>
+<ol type="1">
+<li>Muestrea <span class="math inline">p</span> puntos a partir del conjunto de datos</li>
+<li>Generar <span class="math inline">p</span> puntos aleatorios en el mismo espacio</li>
+<li>Calcula <span class="math inline">H</span>, donde:
+<ul>
+<li><span class="math inline">w_i</span>: distancia desde el punto aleatorio i hasta el vecino más cercano en los datos originales</li>
+<li><span class="math inline">u_i</span>: distancia desde el punto de muestra i hasta el vecino más cercano en los datos originales</li>
+</ul></li>
+</ol>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/f-hopkins.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Formula de Estadístico de Hopkins</figcaption><p></p>
+</figure>
+</div>
+<p>Los valores de H cercanos a 0,5 indican datos aleatorios, a 1 indica datos altamente agrupados y a 0 indica una distribución uniforme.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/hopkins.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Visualización Gráfica de Estadístico de Hopkins</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="inspección-visual" class="level3 page-columns page-full" data-number="4.5.2">
+<h3 data-number="4.5.2" class="anchored" data-anchor-id="inspección-visual"><span class="header-section-number">4.5.2</span> Inspección visual</h3>
+<ol type="1">
+<li>Crear la matriz de distancia</li>
+<li>Ordene la matriz en función de las etiquetas de clúster obtenidas.</li>
+<li>Inspeccione visualmente</li>
+</ol>
+<p>Las buenas agrupaciones exhiben un patrón de bloque claro con “mismo color”</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/insp_visual.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Inspescción Visual</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="coeficiente-de-correlación" class="level3 page-columns page-full" data-number="4.5.3">
+<h3 data-number="4.5.3" class="anchored" data-anchor-id="coeficiente-de-correlación"><span class="header-section-number">4.5.3</span> Coeficiente de correlación</h3>
+<ol type="1">
+<li>Construir la matriz de similitud inicial entre todos los puntos <span class="math inline">s(i,j) = 1 / (1+d(i,j))</span></li>
+<li>Construye la matriz de similitud “ideal” basada en la pertenencia al clúster</li>
+<li>Calcule la correlación entre la matriz de similitud inicial y la matriz de similitud “ideal” (los ejes X e Y son la similitud inicial/ideal respectivamente).</li>
+<li>La alta correlación indica que los puntos del mismo clúster están cerca el uno del otro</li>
+</ol>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/coef-correlacion.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Coeficiente de correlación</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="coeficiente-de-cohesión" class="level3 page-columns page-full" data-number="4.5.4">
+<h3 data-number="4.5.4" class="anchored" data-anchor-id="coeficiente-de-cohesión"><span class="header-section-number">4.5.4</span> Coeficiente de cohesión</h3>
+<p>Mide cuán estrechamente relacionados están los objetos dentro de cada clúster.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/coef-cohesion.png" class="img-fluid figure-img" style="width:30.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Cohesión</figcaption><p></p>
+</figure>
+</div>
+<p>Suma de errores cuadrados (SSE) es la suma de la distancia cuadrada de un punto al centroide de su clúster.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/f-coef-cohesion.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Formula de Coeficiente de cohesión</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/esq-coef-cohesion.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Esquema de Coeficiente de cohesión</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="coeficiente-de-separación" class="level3 page-columns page-full" data-number="4.5.5">
+<h3 data-number="4.5.5" class="anchored" data-anchor-id="coeficiente-de-separación"><span class="header-section-number">4.5.5</span> Coeficiente de separación</h3>
+<p>Mide cuán distinto es un clúster de los otros clusters.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/coef-separacion.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Coeficiente de separación</figcaption><p></p>
+</figure>
+</div>
+<p>La suma de cuadrados intra grupo (SSB) es la suma de la distancia cuadrada de un centroide de clúster a la media general. Minimizar la cohesión equivale a maximizar la separación.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/f-coef-separacion.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Formula de Coeficiente de separación</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="coeficiente-de-silueta" class="level3 page-columns page-full" data-number="4.5.6">
+<h3 data-number="4.5.6" class="anchored" data-anchor-id="coeficiente-de-silueta"><span class="header-section-number">4.5.6</span> Coeficiente de silueta</h3>
+<p>Combina cohesión y separación. Normalmente varía entre -1 y 1, donde</p>
+<ul>
+<li>Valores cercanos a 1 implican una mejor agrupación en clústeres.</li>
+<li>Valor negativo implica que el punto i está más cerca de otro clúster</li>
+</ul>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/g-coef-silueta.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Gráfico de Coeficiente de silueta</figcaption><p></p>
+</figure>
+</div>
+<p>Para un punto individual <span class="math inline">i</span>:</p>
+<ol type="1">
+<li>Calcular <span class="math inline">a_i</span> como la distancia media de <span class="math inline">i</span> a puntos en el mismo clúster</li>
+<li>Calcule <span class="math inline">b_{ij}</span> como la distancia media del punto <span class="math inline">i</span> a todos los puntos del clúster <span class="math inline">j</span>.</li>
+<li>Calcular <span class="math inline">b_i</span> como el <span class="math inline">b_{ij}</span> mínimo excluyendo el clúster propio.</li>
+<li>El coeficiente de silueta para el punto <span class="math inline">i</span> es:</li>
+</ol>
+<p><span class="math display">S_i =\frac{(b_i-a_i)}{max(a_i,b_i)}</span></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/t-coef-silueta.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Tabla de Coeficiente de silueta</figcaption><p></p>
+</figure>
+</div>
+<p><em>El coeficiente de silueta de un clúster es el promedio de los coeficientes de silueta de los puntos pertenecientes.</em></p>
+</section>
+</section>
+<section id="métodos-de-clusterización" class="level2 page-columns page-full" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="métodos-de-clusterización"><span class="header-section-number">4.6</span> Métodos de Clusterización</h2>
+<section id="basados-en-particiones" class="level3 page-columns page-full" data-number="4.6.1">
+<h3 data-number="4.6.1" class="anchored" data-anchor-id="basados-en-particiones"><span class="header-section-number">4.6.1</span> Basados en Particiones</h3>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/m_particiones.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Métodos basados en particiones</figcaption><p></p>
+</figure>
+</div>
+<section id="k-medias" class="level4 page-columns page-full" data-number="4.6.1.1">
+<h4 data-number="4.6.1.1" class="anchored" data-anchor-id="k-medias"><span class="header-section-number">4.6.1.1</span> K-medias</h4>
+<ul>
+<li><p>Uno de los algoritmos de clusters más simples.</p></li>
+<li><p>Dado un número K de clusters (determinado por el usuario), cada cluster está asociado con un centroide y cada entidad se asigna al cluster con el centroide más cercano.</p></li>
+<li><p>Variantes como K-medioides, o K-modas usan otros estadísticos como centroides</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/kmeans.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">K-medias</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/a-kmeans.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Algoritmo de K-medias</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/centroides-kmeans.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Selección de Centroides K-medias</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="métodos-jerárquicos" class="level4 page-columns page-full" data-number="4.6.1.2">
+<h4 data-number="4.6.1.2" class="anchored" data-anchor-id="métodos-jerárquicos"><span class="header-section-number">4.6.1.2</span> Métodos jerárquicos</h4>
+<p>Las entidades se agrupan en una jerarquía de clústeres anidados.</p>
+<p><img src="images/m-jerarquico.png" class="img-fluid" alt="Ejemplo de Métodos Jerárquicos"> Los métodos jerárquicos se subdividen en aglomerativos y disociativos. Cada una de estas categorías presenta una gran diversidad de variantes. 1. Los métodos aglomerativos, también conocidos como ascendentes, comienzan el análisis con tantos grupos como individuos haya. A partir de estas unidades iniciales se van formando grupos, de forma ascendente, hasta que al final del proceso todos los casos tratados están englobados en un mismo conglomerado. 2. Los métodos disociativos, también llamados descendentes, constituyen el proceso inverso al anterior. Comienzan con un conglomerado que engloba a todos los casos tratados y, a partir de este grupo inicial, a través de sucesivas divisiones, se van formando grupos cada vez más pequeños. Al final del proceso se tienen tantas agrupaciones como casos han sido tratados.</p>
+<p><strong>Algoritmo</strong></p>
+<p>El algoritmo básico para clustering aglomerativo es sencillo:</p>
+<ol type="1">
+<li>Deje que cada punto de datos sea un clúster</li>
+<li>Calcular la matriz de proximidad (matriz de distancia entre cada clúster)</li>
+<li>Repetir hasta que sólo quede un solo clúster
+<ol type="1">
+<li>Fusionar los dos clústeres más cercanos</li>
+<li>Actualizar la matriz de proximidad</li>
+</ol></li>
+</ol>
+<p>El paso clave es el cálculo de la proximidad de dos clústeres</p>
+<p>Diferentes enfoques para definir la distancia entre clústeres distinguen los diferentes algoritmos</p>
+<p><strong>Dendrogramas</strong></p>
+<p>Un dendrograma es una estructura de tipo árbol que muestra el proceso generativo de agrupación en clústeres. El eje X muestra los puntos de datos originales, mientras que el eje Y podría mostrar la distancia entre clústeres.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/t-dendogramas.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Tipos de Dendogramas</figcaption><p></p>
+</figure>
+</div>
+<p><strong>Métodos de Aglomeración</strong></p>
+<p>A continuación vamos a presentar algunas de las estrategias que pueden ser empleadas a la hora de unir los clusters en las diversas etapas o niveles de un procedimiento jerárquico. Ninguno de estos procedimientos proporciona una solución óptima para todos los problemas que se pueden plantear, ya que es posible llegar a distintos resultados según el método elegido.</p>
+<dl>
+<dt>Single linkage:</dt>
+<dd>
+<p>Esta estrategia recibe en la literatura anglosajona el nombre de amalgamamiento simple (single linkage). En este método se considera que la distancia o similitud entre dos clusters viene dada, respectivamente, por la mínima distancia (o máxima similitud) entre sus componentes.</p>
+</dd>
+<dt>Complete linkage:</dt>
+<dd>
+<p>En este método, también conocido como el procedimiento de amalgamamiento completo (complete linkage), se considera que la distancia o similitud entre dos clusters hay que medirla atendiendo a sus elementos más dispares, o sea, la distancia o similitud entre clusters viene dada, respectivamente, por la máxima distancia (o mínima similitud) entre sus componentes.</p>
+</dd>
+<dt>Average linkage:</dt>
+<dd>
+<p>En esta estrategia la distancia, o similitud, del cluster <span class="math inline">C_i</span> con el <span class="math inline">C_j</span> se obtiene como la media aritmética entre la distancia, o similitud, de las componentes de dichos clusters.</p>
+</dd>
+</dl>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/m-aglomeracion.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Métodos de Aglomeración</figcaption><p></p>
+</figure>
+</div>
+<p><strong>Desventajas</strong></p>
+<ul>
+<li>El algoritmo es demasiado caro O(n3): Hay n pasos, para unir clústeres, y en cada paso calculamos la matriz de proximidad O(n2).</li>
+<li>Una vez que se toma la decisión de combinar dos grupos, no se puede revertir</li>
+<li>Ninguna función objetivo se minimiza directamente</li>
+</ul>
+</section>
+</section>
+<section id="clusters-difusos" class="level3 page-columns page-full" data-number="4.6.2">
+<h3 data-number="4.6.2" class="anchored" data-anchor-id="clusters-difusos"><span class="header-section-number">4.6.2</span> Clusters difusos</h3>
+<p>Cada punto tiene un probabilidad de pertenecer a cada clúster.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/cl-difusos.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Ejemplo de Clusters difusos</figcaption><p></p>
+</figure>
+</div>
+<section id="coeficiente-de-partición-difusa-fpc" class="level4 page-columns page-full" data-number="4.6.2.1">
+<h4 data-number="4.6.2.1" class="anchored" data-anchor-id="coeficiente-de-partición-difusa-fpc"><span class="header-section-number">4.6.2.1</span> Coeficiente de partición difusa (FPC)</h4>
+<p>El coeficiente de partición difuso evalúa la <strong>variabilidad</strong> de las asignaciones.</p>
+<p><span class="math display">F(U)= \frac{tr(U*U^T)}{n}</span></p>
+<p>Donde <span class="math inline">U</span> es la matriz de pertenencia, <span class="math inline">*</span> es el operador de multiplicación entre matrices, y <span class="math inline">tr( )</span> es la traza de la matriz, es decir, la suma de los valores diagonales.</p>
+<p>El coeficiente de partición difusa varía entre 0 y 1 donde un valor cercano a 1 implica menor variabilidad en la matriz de pertenencia, que se asocia a una mejor clusterización de los datos.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/val-FPC.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Valores de Coeficiente de partición difusa y su representación gráfica</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="gaussian-mixed-models" class="level4 page-columns page-full" data-number="4.6.2.2">
+<h4 data-number="4.6.2.2" class="anchored" data-anchor-id="gaussian-mixed-models"><span class="header-section-number">4.6.2.2</span> Gaussian Mixed Models</h4>
+<p>Un modelo de mezcla gaussiana (GMM) asume que los datos se generaron a partir de una mezcla de <span class="math inline">K</span> gaussianos multidimensionales, donde cada componente tiene parámetros: <span class="math display">N_k(\mu_k,\Sigma_k)</span></p>
+<ul>
+<li>K es definido por el usuario.*</li>
+</ul>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/GMM.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Represenación Gráfica Gaussian Mixed Models</figcaption><p></p>
+</figure>
+</div>
+<p><strong>Gaussiono Multivariado</strong></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/gauss-multivariado.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Gaussionao Multivariado</figcaption><p></p>
+</figure>
+</div>
+<p><img src="images/gauss-multivariado2.png" class="img-fluid"> <strong>Algoritmo</strong></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/algoritmo-gmm1.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Algoritmo GMM</figcaption><p></p>
+</figure>
+</div>
+<p><img src="images/algoritmo-gmm2.png" class="img-fluid"></p>
+<p><img src="images/resumen-a-gmm.png" class="img-fluid"></p>
+</section>
+</section>
+</section>
+<section id="referencias" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="referencias"><span class="header-section-number">4.7</span> Referencias</h2>
+<p><a href="https://www.ugr.es/~gallardo/pdf/cluster-3.pdf">Métodos Jerárquicos de Análisis Cluster.</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./C3-clusters.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Análisis de Cluster</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./summary.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright 2022, Denis Berroeta</div>   
+  </div>
+</footer>
+
+
+
+</body></html>

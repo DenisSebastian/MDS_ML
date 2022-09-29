@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Machine Learning 2022 - 2&nbsp; Feature Engineering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./C3-clusters.html" rel="next">
+<link href="./intro.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<link rel="stylesheet" href="style/style.css">
+</head>
+
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Feature Engineering</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Machine Learning 2022</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Prefacio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">Introducción</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C2-Features_engineering.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Feature Engineering</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C3-clusters.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Análisis de Cluster</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resumen_cluster.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Resumen de Cluster</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summary</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#la-maldición-de-la-dimensionalidad" id="toc-la-maldición-de-la-dimensionalidad" class="nav-link active" data-scroll-target="#la-maldición-de-la-dimensionalidad"> <span class="header-section-number">2.1</span> La maldición de la dimensionalidad</a></li>
+  <li><a href="#análisis-exploratorio-de-datos-eda" id="toc-análisis-exploratorio-de-datos-eda" class="nav-link" data-scroll-target="#análisis-exploratorio-de-datos-eda"> <span class="header-section-number">2.2</span> Análisis exploratorio de datos (EDA)</a>
+  <ul class="collapse">
+  <li><a href="#objetivos-eda" id="toc-objetivos-eda" class="nav-link" data-scroll-target="#objetivos-eda"> <span class="header-section-number">2.2.1</span> Objetivos EDA:</a></li>
+  </ul></li>
+  <li><a href="#definición-de-ingeniería-de-atributos" id="toc-definición-de-ingeniería-de-atributos" class="nav-link" data-scroll-target="#definición-de-ingeniería-de-atributos"> <span class="header-section-number">2.3</span> Definición de Ingeniería de Atributos</a></li>
+  <li><a href="#objetivos-de-feature-engineering" id="toc-objetivos-de-feature-engineering" class="nav-link" data-scroll-target="#objetivos-de-feature-engineering"> <span class="header-section-number">2.4</span> Objetivos de Feature Engineering</a></li>
+  <li><a href="#sec-distancias" id="toc-sec-distancias" class="nav-link" data-scroll-target="#sec-distancias"> <span class="header-section-number">2.5</span> Distancias</a>
+  <ul class="collapse">
+  <li><a href="#tipos-de-distancias" id="toc-tipos-de-distancias" class="nav-link" data-scroll-target="#tipos-de-distancias"> <span class="header-section-number">2.5.1</span> Tipos de Distancias</a></li>
+  <li><a href="#matriz-de-distancias" id="toc-matriz-de-distancias" class="nav-link" data-scroll-target="#matriz-de-distancias"> <span class="header-section-number">2.5.2</span> Matriz de Distancias</a></li>
+  </ul></li>
+  <li><a href="#similitud" id="toc-similitud" class="nav-link" data-scroll-target="#similitud"> <span class="header-section-number">2.6</span> Similitud</a></li>
+  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias"> <span class="header-section-number">2.7</span> Referencias:</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-fengineering" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Feature Engineering</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="la-maldición-de-la-dimensionalidad" class="level2 page-columns page-full" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="la-maldición-de-la-dimensionalidad"><span class="header-section-number">2.1</span> La maldición de la dimensionalidad</h2>
+<ul>
+<li>Una cantidad correcta de atributos ayudan a crear mejores modelos.</li>
+<li>Los datos de altas dimensiones se vuelven cada vez más dispersos en su espacio.</li>
+<li>Las definiciones de densidad y distancia entre puntos se vuelven menos significativas a mayor numero de atributos.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/la_maldicion.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">La Maldición de la dimensionalidad</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="análisis-exploratorio-de-datos-eda" class="level2 page-columns page-full" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="análisis-exploratorio-de-datos-eda"><span class="header-section-number">2.2</span> Análisis exploratorio de datos (EDA)</h2>
+<p>Análisis del conjunto de datos para resumir sus principales características, mediante métodos estadísticos y visuales.</p>
+<section id="objetivos-eda" class="level3 page-columns page-full" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="objetivos-eda"><span class="header-section-number">2.2.1</span> Objetivos EDA:</h3>
+<ul>
+<li>Descubrir la estructura subyacente de los datos</li>
+<li>Identificar variables relevantes Detectar valores atípicos y anomalías Validar supuestos</li>
+<li>Generar hipótesis a partir de los datos</li>
+</ul>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/eda.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Ejemplo de Análisis exploratorio de datos (EDA)</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="definición-de-ingeniería-de-atributos" class="level2 page-columns page-full" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="definición-de-ingeniería-de-atributos"><span class="header-section-number">2.3</span> Definición de Ingeniería de Atributos</h2>
+<dl>
+<dt>Selección de atributos:</dt>
+<dd>
+<p>Selección de un subconjunto de atributos según algún criterio específico.</p>
+</dd>
+</dl>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/f-selection.png" class="img-fluid figure-img" style="width:30.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Selección de atributos</figcaption><p></p>
+</figure>
+</div>
+<dl>
+<dt>Extracción de atributos:</dt>
+<dd>
+<p>Creación de nuevos atributos a partir de atributos originales</p>
+</dd>
+</dl>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/f-extraction.png" class="img-fluid figure-img" style="width:30.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Extracción de atributos</figcaption><p></p>
+</figure>
+</div>
+<p>Pueden hacerse con conocimiento del dominio o algorítmicamente</p>
+</section>
+<section id="objetivos-de-feature-engineering" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="objetivos-de-feature-engineering"><span class="header-section-number">2.4</span> Objetivos de Feature Engineering</h2>
+<ul>
+<li><p>Mejorar el desempeño de los modelos:</p>
+<ul>
+<li>Poder predictivo</li>
+<li>Complejidad</li>
+<li>Tiempo de ejecución</li>
+</ul></li>
+<li><p>Visualizar los datos</p></li>
+<li><p>Eliminar el ruido</p></li>
+</ul>
+</section>
+<section id="sec-distancias" class="level2 page-columns page-full" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="sec-distancias"><span class="header-section-number">2.5</span> Distancias</h2>
+<p>Una métrica que mide la distancia entre un par de entidades dados los dos puntos <span class="math inline">x</span> e <span class="math inline">y</span>, una función métrica o de distancia debe cumplir las siguientes condiciones:</p>
+<table class="table">
+<caption>Tabla de Condiciones de Distancias</caption>
+<thead>
+<tr class="header">
+<th>Nombre Condición</th>
+<th>Condición</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>No negatividad</td>
+<td><span class="math inline">d(x,y) &gt;0</span></td>
+</tr>
+<tr class="even">
+<td>Identidad</td>
+<td><span class="math inline">d(x,y)=0 &lt;=&gt; x=y</span></td>
+</tr>
+<tr class="odd">
+<td>Simetría</td>
+<td><span class="math inline">d(x,y)=d(y,x)</span></td>
+</tr>
+<tr class="even">
+<td>Desigualdad triangular</td>
+<td><span class="math inline">d(x,z) &lt;= d(x,y)+d(y,z)</span></td>
+</tr>
+</tbody>
+</table>
+<section id="tipos-de-distancias" class="level3 page-columns page-full" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="tipos-de-distancias"><span class="header-section-number">2.5.1</span> Tipos de Distancias</h3>
+<section id="distancia-euclediana" class="level4 page-columns page-full" data-number="2.5.1.1">
+<h4 data-number="2.5.1.1" class="anchored" data-anchor-id="distancia-euclediana"><span class="header-section-number">2.5.1.1</span> Distancia Euclediana</h4>
+<p>Se desprende del teorema de Pitágoras</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/d-euclediana.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Distancia Euclediana</figcaption><p></p>
+</figure>
+</div>
+<p><span class="math display">d_E(P_1, P_2)=\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}</span></p>
+</section>
+<section id="distancia-de-minkowski" class="level4 page-columns page-full" data-number="2.5.1.2">
+<h4 data-number="2.5.1.2" class="anchored" data-anchor-id="distancia-de-minkowski"><span class="header-section-number">2.5.1.2</span> Distancia de Minkowski</h4>
+<p>Generalización de la distancia euclidiana. Sean que <span class="math inline">p</span> y <span class="math inline">q</span> vectores m-dimensionales</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/d-minkowski.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Formulación de Distancia de Minkowski</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="distancia-de-mahalanobis" class="level4 page-columns page-full" data-number="2.5.1.3">
+<h4 data-number="2.5.1.3" class="anchored" data-anchor-id="distancia-de-mahalanobis"><span class="header-section-number">2.5.1.3</span> Distancia de Mahalanobis</h4>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/d-mahalanobis.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Fórmulación de Distancia de Minkowski</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="distancia-del-coseno" class="level4 page-columns page-full" data-number="2.5.1.4">
+<h4 data-number="2.5.1.4" class="anchored" data-anchor-id="distancia-del-coseno"><span class="header-section-number">2.5.1.4</span> Distancia del Coseno</h4>
+<p><img src="images/d-coseno.png" class="img-fluid" style="width:100.0%" alt="Distancia del Coseno"> #### Distancia Suave del Coseno</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/d-suave-coseno.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Distancia Suave del Coseno</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="matriz-de-distancias" class="level3 page-columns page-full" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="matriz-de-distancias"><span class="header-section-number">2.5.2</span> Matriz de Distancias</h3>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/matriz-distancia.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Matriz de Distancias</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="similitud" class="level2 page-columns page-full" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="similitud"><span class="header-section-number">2.6</span> Similitud</h2>
+<p><strong>Similitud:</strong></p>
+<ul>
+<li>Mide lo parecidos que son dos entidades.</li>
+<li>Es más alto cuando entidades son más parecidas.</li>
+</ul>
+<p><strong>Disimilitud</strong></p>
+<ul>
+<li>Mide cuan diferentes son dos entidades</li>
+<li>Más bajo cuando los objetos son más parecidos</li>
+</ul>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/t-similitud.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Tabla de Similitud y Disimilitud</figcaption><p></p>
+</figure>
+</div>
+<!-- ## Lectura de Librerías -->
+<!-- ```{r} -->
+<!-- pacman::p_load(tidyverse, proxy) -->
+<!-- set.seed(42) -->
+<!-- ``` -->
+<!-- ## Lectura de Insumos -->
+<!-- ```{r} -->
+<!-- data_raw <- read_rds("data/partidos_futbol.rds") -->
+<!-- data_raw %>% glimpse() -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- data_raw <- data_raw %>% mutate(formationUsed = factor(formationUsed)) -->
+<!-- data_num <- data_raw %>%  -->
+<!--   mutate(equipo = as.numeric(factor(equipo))) %>%  -->
+<!--   select(where(is.numeric)) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- # creamos un subconjunto para que sea mas liviano -->
+<!-- data <- -->
+<!--   data_num %>%  -->
+<!--   select(equipo, accuratePass, wonTackle, goalsConceded, -->
+<!--          ontargetScoringAtt, totalScoringAtt, saves) %>%  -->
+<!--   sample_n(1000) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- # Comparación entre atributtos ---- -->
+<!-- # los metodos de similaridad y distancias disponibles en el paquete proxy -->
+<!-- summary(pr_DB) -->
+<!-- # Correlaciones -->
+<!-- cor(data$ontargetScoringAtt, data$accuratePass, method = "pearson") -->
+<!-- cor(data$ontargetScoringAtt, data$accuratePass, method = "spearman") -->
+<!-- cor(data$ontargetScoringAtt, data$accuratePass, method = "kendall") -->
+<!-- # Similitudes -->
+<!-- simil(list(data$ontargetScoringAtt,data$accuratePass), method = "cosine") -->
+<!-- simil(list(data$ontargetScoringAtt,data$accuratePass), method = "Jaccard") -->
+<!-- simil(list(data$ontargetScoringAtt,data$accuratePass), method = "simple matching") -->
+<!-- simil(list(data$ontargetScoringAtt,data$accuratePass), method = "Kulczynski1") -->
+<!-- # Distancias -->
+<!-- dist(list(data$ontargetScoringAtt,data$accuratePass), method = "Euclidean")  -->
+<!-- dist(list(data$ontargetScoringAtt,data$accuratePass), method = "Manhattan")  -->
+<!-- dist(list(data$ontargetScoringAtt,data$accuratePass), method = "supremum")  -->
+<!-- # Feature Selection ----- -->
+<!-- # Fuerza bruta -->
+<!-- library(stuart)  -->
+<!-- results <- bruteforce(data, list(ra = names(data)), 3, -->
+<!--                       cores = 1)  # numero de nucleos en la maquina -->
+<!-- summary(results)  -->
+<!-- # Metodos de Optimizacion  -->
+<!-- library(FSinR)    -->
+<!-- # definimos primero el algoritmo de busqueda -->
+<!-- searcher <- searchAlgorithm('hillClimbing') -->
+<!-- searcher <- searchAlgorithm('geneticAlgorithm') -->
+<!-- searcher <- searchAlgorithm('tabu', list(tamTabuList = 4, iter = 5, intensification=2, iterIntensification=5, diversification=1, iterDiversification=5, verbose=FALSE) ) -->
+<!-- searcher <- searchAlgorithm('antColony') -->
+<!-- searcher <- searchAlgorithm('sequentialForwardSelection') -->
+<!-- # luego definimos el criterio de evaluacion -->
+<!-- evaluator <- filterEvaluator('determinationCoefficient') -->
+<!-- evaluator <- filterEvaluator("IEConsistency") -->
+<!-- evaluator <- filterEvaluator('chiSquared') -->
+<!-- evaluator <- filterEvaluator('MDLC')  -->
+<!-- evaluator <- wrapperEvaluator("xgbLinear") -->
+<!-- evaluator <- wrapperEvaluator("svmLinearWeights") -->
+<!-- evaluator <- wrapperEvaluator("mlpWeightDecay") -->
+<!-- evaluator <- wrapperEvaluator("lm") -->
+<!-- evaluator <- wrapperEvaluator("knn") -->
+<!-- # Utilizamos una combinacion de estos para encontrar la combinacion de atributos que maximiza la funcion de evaluacion -->
+<!-- results <- featureSelection(data, 'equipo', searcher, evaluator) -->
+<!-- results$bestFeatures -->
+<!-- # Búsqueda directa -->
+<!-- directSearcher <- directSearchAlgorithm('selectKBest', list(k=3)) -->
+<!-- results <- directFeatureSelection(data, 'equipo', directSearcher, evaluator) -->
+<!-- results$bestFeatures -->
+<!-- # Reduccion de Dimensiones ----- -->
+<!-- data2 <- data %>%  -->
+<!--   dplyr::select(-equipo) %>%  -->
+<!--   unique() -->
+<!-- # Principal Component Analysis -->
+<!-- PCA <- prcomp(data2) -->
+<!-- barplot(PCA$sdev) # graficamos el aporte de varianza de cada componente principal -->
+<!-- features_PCA <-  -->
+<!--   predict(PCA) %>%  -->
+<!--   as.data.frame()  -->
+<!-- # Multidimensional scaling  -->
+<!-- d <- dist(data2) # distancias euclidianas entre entidades -->
+<!-- data.MDS <- cmdscale(d, eig=TRUE, k = 2) # k es el numero de dimensiones de salida -->
+<!-- features_MDS <-  -->
+<!--   data.MDS$points %>%  -->
+<!--   as.data.frame()  -->
+<!-- # nonparametric Multi Dinemsional Scaling -->
+<!-- library(MASS) -->
+<!-- data.nMDS <- isoMDS(d, k=2)  -->
+<!-- features_nMDS <-  -->
+<!--   data.nMDS$points %>%  -->
+<!--   as.data.frame()  -->
+<!-- # t-distributed Stochastic Neighbor Embedding -->
+<!-- library(Rtsne) -->
+<!-- data.tsne <- Rtsne(data2, dims = 3, perplexity=30, max_iter = 500) -->
+<!-- features_tsne <-  -->
+<!--   data.tsne$Y %>%  -->
+<!--   as.data.frame()  -->
+<!-- # uniform manifold and projection -->
+<!-- library(umap) -->
+<!-- data.umap <- umap(data2) -->
+<!-- features_umap <- data.umap$layout %>% as.data.frame() -->
+<!-- # visualizamos -->
+<!-- ggplot(features_PCA, aes(PC1,PC2)) + geom_point() -->
+<!-- ggplot(features_MDS, aes(V1,V2)) + geom_point() -->
+<!-- ggplot(features_nMDS, aes(V1,V2)) + geom_point() -->
+<!-- ggplot(features_tsne, aes(V1,V2)) + geom_point() -->
+<!-- ggplot(features_umap, aes(V1,V2)) + geom_point() -->
+<!-- # Ejercicio de visualizacion ----- -->
+<!-- library(datasauRus) -->
+<!-- stats <- datasaurus_dozen %>%  -->
+<!--   group_by(dataset) %>%  -->
+<!--   summarize( -->
+<!--     mean_x    = mean(x), -->
+<!--     mean_y    = mean(y), -->
+<!--     std_dev_x = sd(x), -->
+<!--     std_dev_y = sd(y), -->
+<!--     corr_pears  = cor(x, y, method = "pearson"), -->
+<!--     corr_spear  = cor(x, y, method = "spearman"), -->
+<!--     corr_kendall  = cor(x, y, method = "kendall"), -->
+<!--     simil_cos = simil(list(x,y), method = "cosine") %>% as.numeric(),   # funcion simil en la libreria proxy -->
+<!--     simil_jac = simil(list(x,y), method = "Jaccard") %>% as.numeric(),   # funcion simil en la libreria proxy -->
+<!--     simil_sm = simil(list(x,y), method = "simple matching") %>% as.numeric(),   # funcion simil en la libreria proxy -->
+<!--     simil_kul = simil(list(x,y), method = "Kulczynski1") %>% as.numeric(),   # funcion simil en la libreria proxy -->
+<!--     dist_euc = dist(list(x,y), method = "Euclidean") %>% as.numeric(),    -->
+<!--     dist_manh = dist(list(x,y), method = "Manhattan") %>% as.numeric(),   -->
+<!--     dist_sup = dist(list(x,y), method = "supremum") %>% as.numeric(),    -->
+<!--     median_x    = median(x), -->
+<!--     median_y    = median(y), -->
+<!--     CV_x = sd(x) / mean(x), -->
+<!--     CV_y = sd(y) / mean(y), -->
+<!--     max_x = max(x), -->
+<!--     max_y = max(y) -->
+<!--   ) -->
+<!-- stats  -->
+<!-- # visualizamos las diferencias -->
+<!-- ggplot(datasaurus_dozen, aes(x=x, y=y, colour=dataset)) + -->
+<!--   geom_point() +                                         -->
+<!--   theme_void() +                                         -->
+<!--   theme(legend.position = "none") +                      -->
+<!--   facet_wrap(~dataset, ncol=3) -->
+<!-- # otras formas de visualizar las distribuciones  -->
+<!-- ggplot(datasaurus_dozen, aes(x=x,colour=dataset))+ -->
+<!--   geom_histogram(binwidth = 2)+                          -->
+<!--   theme_void()+ -->
+<!--   theme(legend.position = "none")+ -->
+<!--   facet_wrap(~dataset, ncol=3) -->
+<!-- ggplot(datasaurus_dozen, aes(x=x,colour=dataset))+ -->
+<!--   geom_density()+ -->
+<!--   theme_void()+ -->
+<!--   theme(legend.position = "none")+ -->
+<!--   facet_wrap(~dataset, ncol=3) -->
+<!-- ggplot(datasaurus_dozen, aes(x=x, colour=dataset))+ -->
+<!--   geom_boxplot()+ -->
+<!--   theme_void()+ -->
+<!--   theme(legend.position = "none")+ -->
+<!--   facet_wrap(~dataset, ncol=3) -->
+<!-- ggplot(datasaurus_dozen, aes(x=x, y=y, colour=dataset))+ -->
+<!--   geom_violin()+ -->
+<!--   theme_void()+ -->
+<!--   theme(legend.position = "none")+ -->
+<!--   facet_wrap(~dataset, ncol=3) -->
+<!-- ggplot(datasaurus_dozen, aes(x=x, y=dataset, colour=dataset)) + -->
+<!--   geom_point() + -->
+<!--   geom_boxplot() + -->
+<!--   theme_void() + -->
+<!--   theme(legend.position = "none") -->
+<!-- ``` -->
+</section>
+<section id="referencias" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="referencias"><span class="header-section-number">2.7</span> Referencias:</h2>
+<p><a href="https://www.ufrgs.br/wiki-r/index.php?title=Cálculo_de_similaridade">Índice de Cálculo de Distancias</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./intro.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Introducción</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./C3-clusters.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Análisis de Cluster</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright 2022, Denis Berroeta</div>   
+  </div>
+</footer>
+
+
+
+</body></html>
