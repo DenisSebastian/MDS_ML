@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Machine Learning 2022 - 5&nbsp; Resumen A. Supervisado</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./summary.html" rel="next">
+<link href="./resumen_cluster.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<link rel="stylesheet" href="style/style.css">
+</head>
+
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Resumen A. Supervisado</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Machine Learning 2022</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Prefacio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">Introducción</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C2-Features_engineering.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Feature Engineering</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C3-clusters.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Análisis de Cluster</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resumen_cluster.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Resumen de Cluster</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./res_a_supervisado.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Resumen A. Supervisado</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Summary</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#k-vecino-más-cercano-k-nn" id="toc-k-vecino-más-cercano-k-nn" class="nav-link active" data-scroll-target="#k-vecino-más-cercano-k-nn"> <span class="header-section-number">5.1</span> K vecino más cercano (k-NN)</a>
+  <ul class="collapse">
+  <li><a href="#definiciones-de-k-nn" id="toc-definiciones-de-k-nn" class="nav-link" data-scroll-target="#definiciones-de-k-nn"> <span class="header-section-number">5.1.1</span> Definiciones de k-NN</a></li>
+  <li><a href="#algoritmo-k-nn" id="toc-algoritmo-k-nn" class="nav-link" data-scroll-target="#algoritmo-k-nn"> <span class="header-section-number">5.1.2</span> Algoritmo k-NN</a></li>
+  <li><a href="#preguntas-sobre-k-nn" id="toc-preguntas-sobre-k-nn" class="nav-link" data-scroll-target="#preguntas-sobre-k-nn"> <span class="header-section-number">5.1.3</span> Preguntas sobre k-NN</a></li>
+  <li><a href="#características-k-nn" id="toc-características-k-nn" class="nav-link" data-scroll-target="#características-k-nn"> <span class="header-section-number">5.1.4</span> Características k-NN</a></li>
+  </ul></li>
+  <li><a href="#clasificador-bayesiano" id="toc-clasificador-bayesiano" class="nav-link" data-scroll-target="#clasificador-bayesiano"> <span class="header-section-number">5.2</span> Clasificador bayesiano</a>
+  <ul class="collapse">
+  <li><a href="#naive-bayes" id="toc-naive-bayes" class="nav-link" data-scroll-target="#naive-bayes"> <span class="header-section-number">5.2.1</span> Naive Bayes</a></li>
+  <li><a href="#algoritmo-de-naive-bayes" id="toc-algoritmo-de-naive-bayes" class="nav-link" data-scroll-target="#algoritmo-de-naive-bayes"> <span class="header-section-number">5.2.2</span> Algoritmo de Naive Bayes</a></li>
+  <li><a href="#características-de-naive-bayes" id="toc-características-de-naive-bayes" class="nav-link" data-scroll-target="#características-de-naive-bayes"> <span class="header-section-number">5.2.3</span> Características de Naive Bayes</a></li>
+  <li><a href="#conclusiones-de-naive-bayes" id="toc-conclusiones-de-naive-bayes" class="nav-link" data-scroll-target="#conclusiones-de-naive-bayes"> <span class="header-section-number">5.2.4</span> Conclusiones de Naive Bayes</a></li>
+  </ul></li>
+  <li><a href="#árboles-de-decisión" id="toc-árboles-de-decisión" class="nav-link" data-scroll-target="#árboles-de-decisión"> <span class="header-section-number">5.3</span> Árboles de Decisión</a>
+  <ul class="collapse">
+  <li><a href="#estructura-de-un-árbol-de-decisión" id="toc-estructura-de-un-árbol-de-decisión" class="nav-link" data-scroll-target="#estructura-de-un-árbol-de-decisión"> <span class="header-section-number">5.3.1</span> Estructura de un Árbol de Decisión</a></li>
+  <li><a href="#definición" id="toc-definición" class="nav-link" data-scroll-target="#definición"> <span class="header-section-number">5.3.2</span> Definición</a></li>
+  <li><a href="#algoritmo-de-hunt" id="toc-algoritmo-de-hunt" class="nav-link" data-scroll-target="#algoritmo-de-hunt"> <span class="header-section-number">5.3.3</span> Algoritmo de Hunt</a></li>
+  <li><a href="#consideraciones-en-árboles-de-decisión" id="toc-consideraciones-en-árboles-de-decisión" class="nav-link" data-scroll-target="#consideraciones-en-árboles-de-decisión"> <span class="header-section-number">5.3.4</span> Consideraciones en Árboles de Decisión</a></li>
+  </ul></li>
+  <li><a href="#máquinas-de-soporte-vectorial" id="toc-máquinas-de-soporte-vectorial" class="nav-link" data-scroll-target="#máquinas-de-soporte-vectorial"> <span class="header-section-number">5.4</span> Máquinas de soporte vectorial</a>
+  <ul class="collapse">
+  <li><a href="#definición-support-vector-machines-svm" id="toc-definición-support-vector-machines-svm" class="nav-link" data-scroll-target="#definición-support-vector-machines-svm"> <span class="header-section-number">5.4.1</span> Definición Support Vector Machines (SVM)</a></li>
+  <li><a href="#descripción-de-svm" id="toc-descripción-de-svm" class="nav-link" data-scroll-target="#descripción-de-svm"> <span class="header-section-number">5.4.2</span> Descripción de SVM</a></li>
+  <li><a href="#frontera-de-decisión-svm" id="toc-frontera-de-decisión-svm" class="nav-link" data-scroll-target="#frontera-de-decisión-svm"> <span class="header-section-number">5.4.3</span> Frontera de Decisión SVM</a></li>
+  <li><a href="#optimización-svm" id="toc-optimización-svm" class="nav-link" data-scroll-target="#optimización-svm"> <span class="header-section-number">5.4.4</span> Optimización SVM</a></li>
+  <li><a href="#interpretación-geométrica-svm" id="toc-interpretación-geométrica-svm" class="nav-link" data-scroll-target="#interpretación-geométrica-svm"> <span class="header-section-number">5.4.5</span> Interpretación geométrica SVM</a></li>
+  <li><a href="#caso-no-separable-svm" id="toc-caso-no-separable-svm" class="nav-link" data-scroll-target="#caso-no-separable-svm"> <span class="header-section-number">5.4.6</span> Caso no separable SVM</a></li>
+  <li><a href="#limitaciones-svm-clásico" id="toc-limitaciones-svm-clásico" class="nav-link" data-scroll-target="#limitaciones-svm-clásico"> <span class="header-section-number">5.4.7</span> Limitaciones SVM clásico</a></li>
+  <li><a href="#debilidades-y-fortalezas-svm" id="toc-debilidades-y-fortalezas-svm" class="nav-link" data-scroll-target="#debilidades-y-fortalezas-svm"> <span class="header-section-number">5.4.8</span> Debilidades y fortalezas SVM</a></li>
+  <li><a href="#modelos-ensamblados" id="toc-modelos-ensamblados" class="nav-link" data-scroll-target="#modelos-ensamblados"> <span class="header-section-number">5.4.9</span> Modelos Ensamblados</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Resumen A. Supervisado</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="k-vecino-más-cercano-k-nn" class="level2 page-columns page-full" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="k-vecino-más-cercano-k-nn"><span class="header-section-number">5.1</span> K vecino más cercano (k-NN)</h2>
+<section id="definiciones-de-k-nn" class="level3 page-columns page-full" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="definiciones-de-k-nn"><span class="header-section-number">5.1.1</span> Definiciones de k-NN</h3>
+<ul>
+<li>k-NN es un tipo de aprendizaje basado en instancias o aprendizaje perezoso (<em>lazy</em>).</li>
+<li>k-NN almacena los datos de entrenamiento p-dimensionales y retrasa el proceso de aprendizaje hasta que se debe clasificar una nueva instancia.</li>
+<li>Para predecir un nuevo punto, los vecinos k más cercanos se calculan utilizando la distancia</li>
+<li>La clasificación final se realiza en función de las etiquetas de clase de estos vecinos.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/knn_class.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Ejemplo de clasificación con k-NN con sus fronteras de decisión</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="algoritmo-k-nn" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="algoritmo-k-nn"><span class="header-section-number">5.1.2</span> Algoritmo k-NN</h3>
+<ul>
+<li>Deje que <span class="math inline">x_j</span> sea un nuevo punto p-dimensional sin etiquetar.</li>
+<li>Calcular <span class="math inline">d(x_i, x_j)</span> para <span class="math inline">i={1,...,n}</span></li>
+<li>Encuentra los vecinos k más cercanos de <span class="math inline">x_j</span> (<span class="math inline">d(x_i, x_j</span>) se minimiza).</li>
+<li>Etiqueta <span class="math inline">x_j</span> basada en los k vecinos más cercanos</li>
+</ul>
+</section>
+<section id="preguntas-sobre-k-nn" class="level3" data-number="5.1.3">
+<h3 data-number="5.1.3" class="anchored" data-anchor-id="preguntas-sobre-k-nn"><span class="header-section-number">5.1.3</span> Preguntas sobre k-NN</h3>
+<dl>
+<dt>¿Cuál es la mejor relación calidad-precio para k?</dt>
+<dd>
+<p>Por lo general, se utiliza un valor pequeño, por ejemplo, k&lt;10.</p>
+</dd>
+<dt>¿Qué medida de distancia d( ) utilizar?</dt>
+<dd>
+<p>A menudo se utiliza la distancia euclidiana (L2).</p>
+</dd>
+<dt>¿Cómo puedo etiquetar xj en función de los vecinos k más cercanos?</dt>
+<dd>
+<p>A menudo se utiliza el voto mayoritario.</p>
+</dd>
+</dl>
+</section>
+<section id="características-k-nn" class="level3" data-number="5.1.4">
+<h3 data-number="5.1.4" class="anchored" data-anchor-id="características-k-nn"><span class="header-section-number">5.1.4</span> Características k-NN</h3>
+<p><strong>Parámetros del modelo:</strong></p>
+<ul>
+<li>k (número de vecinos)</li>
+<li>cualquier parámetro de medida de distancia (por ejemplo, pesos en las entidades)</li>
+</ul>
+<p><strong>Fortalezas:</strong></p>
+<ul>
+<li>Modelo sencillo, fácil de implementar</li>
+<li>Aprendizaje muy eficiente: <span class="math inline">O(1)</span></li>
+</ul>
+<p><strong>Debilidades:</strong></p>
+<ul>
+<li>Inferencia ineficiente: tiempo y espacio <span class="math inline">O(n)</span></li>
+<li>Maldición de la dimensionalidad: A medida que aumenta el número de entidades, necesita un aumento exponencial en el tamaño de los datos para asegurarse de que tiene ejemplos cercanos para cualquier dato dado.</li>
+</ul>
+</section>
+</section>
+<section id="clasificador-bayesiano" class="level2 page-columns page-full" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="clasificador-bayesiano"><span class="header-section-number">5.2</span> Clasificador bayesiano</h2>
+<section id="naive-bayes" class="level3 page-columns page-full" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="naive-bayes"><span class="header-section-number">5.2.1</span> Naive Bayes</h3>
+<p>Naive Bayes aprende una distribución condicional de la probabilidad. Dado un punto de datos <span class="math inline">x</span>, la salida del modelo es la probabilidad que <span class="math inline">x</span> pertenezca a una clase específica.</p>
+<p>Naive Bayes utiliza 3 conceptos clave:</p>
+<ul>
+<li>Probabilidad condicional</li>
+<li>Teorema bayesiano</li>
+<li>Independencia condicional</li>
+</ul>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/res_naive_bayes.png" class="img-fluid figure-img" width="520"></p>
+<p></p><figcaption class="figure-caption margin-caption">¿Qué tan probable es comprar una computadora a un estudiante de 23 años con un crédito justo y ingresos medios? <span class="math inline">x=\{&lt;=30,medium,yes,fair\}</span></figcaption><p></p>
+</figure>
+</div>
+<dl>
+<dt>Truco:</dt>
+<dd>
+<p><strong>Asumiremos Ingenuamente</strong> independencia condicional de <span class="math inline">X_1, X_2, ...,X_k</span> dado <span class="math inline">C</span> (aunque esto no necesariamente sea cierto)</p>
+</dd>
+</dl>
+<p><span class="math display">P(C|X_1, X_2, ...,X_k)\propto \prod_{i=1}^{k}P(X_i|C)P(C)</span></p>
+<p>Ahora fácilmente podemos calcular cada <span class="math inline">P(X_i|C)</span> a partir de los datos.</p>
+</section>
+<section id="algoritmo-de-naive-bayes" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="algoritmo-de-naive-bayes"><span class="header-section-number">5.2.2</span> Algoritmo de Naive Bayes</h3>
+<ul>
+<li>Fase de aprendizaje: Dado un conjunto de entrenamiento S,</li>
+</ul>
+<p><img src="images/algoritmo_N_bayes.png" class="img-fluid" width="520"></p>
+<p>Salida: Tablas de Probabilidad condicional; para elemento <span class="math inline">x_j, X_j \times L</span></p>
+<ul>
+<li>Fase de prueba: dada una instancia desconocida <span class="math inline">X' =(a'_1,...,a'_n)</span></li>
+</ul>
+<p>Buscar tablas para asignar la etiqueta <span class="math inline">c*</span> a <span class="math inline">X'</span> si:</p>
+<p><img src="images/algoritmo_N_bayes2.png" class="img-fluid" width="520"></p>
+</section>
+<section id="características-de-naive-bayes" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="características-de-naive-bayes"><span class="header-section-number">5.2.3</span> Características de Naive Bayes</h3>
+<p><strong>Fortalezas:</strong></p>
+<ul>
+<li>Fácil de implementar y se puede aprender de forma incremental</li>
+<li>A menudo funciona bien incluso cuando se viola la suposición de independencia</li>
+<li>Se puede aprender gradualmente</li>
+<li>Los valores que faltan se ignoran en el proceso de aprendizaje</li>
+<li>Modelo robusto con respecto a valores atípicos y datos irrelevantes</li>
+</ul>
+<p><strong>Debilidades:</strong></p>
+<ul>
+<li>La suposición condicional de clase produce estimaciones de probabilidad sesgadas</li>
+<li>Las dependencias entre variables no se pueden modelar</li>
+</ul>
+</section>
+<section id="conclusiones-de-naive-bayes" class="level3" data-number="5.2.4">
+<h3 data-number="5.2.4" class="anchored" data-anchor-id="conclusiones-de-naive-bayes"><span class="header-section-number">5.2.4</span> Conclusiones de Naive Bayes</h3>
+<ul>
+<li>Naive Bayes se basa en el supuesto de la independencia
+<ul>
+<li>El entrenamiento es muy fácil y rápido; solo requiere considerar cada atributo en cada clase por separado</li>
+<li>La prueba es sencilla; simplemente buscando tablas o calculando probabilidades condicionales con distribuciones normales</li>
+</ul></li>
+<li>Un modelo generativo popular
+<ul>
+<li>Performance es competitivo para la mayoría de los clasificadores de última generación, incluso en presencia de una violación de la suposición de independencia</li>
+<li>Muchas aplicaciones exitosas, por ejemplo, filtrado de correo no deseado</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="árboles-de-decisión" class="level2 page-columns page-full" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="árboles-de-decisión"><span class="header-section-number">5.3</span> Árboles de Decisión</h2>
+<section id="estructura-de-un-árbol-de-decisión" class="level3 page-columns page-full" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="estructura-de-un-árbol-de-decisión"><span class="header-section-number">5.3.1</span> Estructura de un Árbol de Decisión</h3>
+<p>Un árbol de decisión es una estructura similar a un diagrama de flujo en la que:</p>
+<ul>
+<li>Cada nodo interno representa una “prueba” en un atributo</li>
+<li>Cada rama representa el resultado de la prueba</li>
+<li>Cada nodo hoja representa una etiqueta de clase</li>
+</ul>
+<p>Dado un punto de datos <span class="math inline">x</span>, la salida del modelo es la probabilidad de que <span class="math inline">x</span> pertenezca a una clase específica.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/arbol_decision.png" class="img-fluid figure-img" width="720"></p>
+<p></p><figcaption class="figure-caption margin-caption">Ejemplo de un árbol de decisión</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="definición" class="level3 page-columns page-full" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="definición"><span class="header-section-number">5.3.2</span> Definición</h3>
+<p>Un árbol de decisión segmenta los datos de entrada utilizando secciones rectangulares del espacio</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/seg_ad.png" class="img-fluid figure-img" width="720"></p>
+<p></p><figcaption class="figure-caption margin-caption">Segmentación de datos en secciones rectangulares</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="algoritmo-de-hunt" class="level3 page-columns page-full" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="algoritmo-de-hunt"><span class="header-section-number">5.3.3</span> Algoritmo de Hunt</h3>
+<p>Sea <span class="math inline">D_t</span> el conjunto de registros de entrenamiento que llegan a un nodo <span class="math inline">T</span></p>
+<ul>
+<li>si <span class="math inline">D_t</span> contiene registros que pertenecen a la misma clase <span class="math inline">y_t</span>, entonces t es un nodo hoja etiquetado como <span class="math inline">y_t</span></li>
+<li>Si <span class="math inline">D_t</span> es un conjunto vacío, entonces <span class="math inline">t</span> es un nodo hoja etiquetado por la clase predeterminada, <span class="math inline">y_d</span></li>
+<li>Si <span class="math inline">D_t</span> contiene registros que pertenecen a más de una clase, utilice una prueba de atributo para dividir los datos en subconjuntos más pequeños. Aplicar el procedimiento de forma recursiva a cada subconjunto.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/alg_hunt.png" class="img-fluid figure-img" width="320"></p>
+<p></p><figcaption class="figure-caption margin-caption">Definición de Algoritmo de Hunt</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="consideraciones-en-árboles-de-decisión" class="level3 page-columns page-full" data-number="5.3.4">
+<h3 data-number="5.3.4" class="anchored" data-anchor-id="consideraciones-en-árboles-de-decisión"><span class="header-section-number">5.3.4</span> Consideraciones en Árboles de Decisión</h3>
+<p><strong>Cómo especificar los puntos de corte de atributos</strong></p>
+<p><em>Número de formas de dividir</em></p>
+<ul>
+<li>División de 2 vías</li>
+<li>División multi vías</li>
+</ul>
+<p><em>Tipos de atributos</em></p>
+<ul>
+<li>Nominal</li>
+<li>Ordinal</li>
+<li>Continuo</li>
+</ul>
+<p><strong>Particionamiento de atributo continuo</strong></p>
+<ul>
+<li><strong>Partición binaria</strong>: Regla única que divide el atributo en dos subconjuntos <span class="math inline">(X_j &gt; v)</span>. Podría ser computacionalmente costoso, porque debe considerar todas las divisiones posibles y encontrar el mejor corte.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/bin_continua.png" class="img-fluid figure-img" width="220"></p>
+<p></p><figcaption class="figure-caption margin-caption">Partición binaria de una variable continua</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li><p><strong>Decisión de discretización</strong>: Formar un atributo categórico ordinal</p>
+<ul>
+<li>Estático: discretizar una vez al principio (edad&lt;30, 30&lt;edad&lt;40, 40&lt;edad)</li>
+<li>Dinámico: los rangos pueden variar dependiendo de la rama del árbol</li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/disc_continua.png" class="img-fluid figure-img" width="420"></p>
+<p></p><figcaption class="figure-caption margin-caption">Discretización de una variable continua</figcaption><p></p>
+</figure>
+</div>
+<p><strong>Métodos de crecimiento completo</strong></p>
+<ul>
+<li>Todos los ejemplos de un nodo pertenecen a la misma clase</li>
+<li>No quedan atributos para divisiones posteriores</li>
+<li>No quedan muestras</li>
+</ul>
+<p><strong>¿Qué impacto tiene esto en la calidad de los árboles aprendidos?</strong></p>
+<ul>
+<li>Los árboles sobreajustan los datos y la precisión de las pruebas disminuye.</li>
+<li>El modelo aprende los datos de entrenamiento, pero no se generaliza a los nuevos datos.</li>
+<li>La poda se utiliza para evitar el sobreajuste.</li>
+</ul>
+<p><strong>Poda</strong></p>
+<p><em>Pre poda</em></p>
+<ul>
+<li>Aplicar una prueba estadística para decidir si se debe expandir un nodo</li>
+<li>Utilice una medida explícita de complejidad para penalizar los árboles grandes (por ejemplo, longitud mínima de la descripción)</li>
+</ul>
+<p><em>Post poda</em></p>
+<ul>
+<li>Utilice un conjunto de ejemplos para evaluar la utilidad de podar nodos del árbol (después de que el árbol esté completamente crecido)</li>
+</ul>
+</section>
+</section>
+<section id="máquinas-de-soporte-vectorial" class="level2 page-columns page-full" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="máquinas-de-soporte-vectorial"><span class="header-section-number">5.4</span> Máquinas de soporte vectorial</h2>
+<section id="definición-support-vector-machines-svm" class="level3 page-columns page-full" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="definición-support-vector-machines-svm"><span class="header-section-number">5.4.1</span> Definición Support Vector Machines (SVM)</h3>
+<p>SVM es un modelo discriminativo que busca la mejor manera de dividir un espacio, basándose en algunos puntos de este (support vectors), para separarlo en 2 zonas con clases distintas.</p>
+<p>Luego se construye un clasificador sobre esa división.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/svm_div_space.png" class="img-fluid figure-img" width="720"></p>
+<p></p><figcaption class="figure-caption margin-caption">División de el espacio usando vectores de soporte</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="descripción-de-svm" class="level3 page-columns page-full" data-number="5.4.2">
+<h3 data-number="5.4.2" class="anchored" data-anchor-id="descripción-de-svm"><span class="header-section-number">5.4.2</span> Descripción de SVM</h3>
+<p>Para separar el espacio nosotros tenemos que buscar un hiperplano (de una dimensión menor a las dimensiones del espacio). En un espacio 2D, como en el próximo ejemplo, el hiperplano será una línea.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/SVM_div_1d.png" class="img-fluid figure-img" width="520"></p>
+<p></p><figcaption class="figure-caption margin-caption">Linea (hiperplano) que divide el espacio como frontera de decisión</figcaption><p></p>
+</figure>
+</div>
+<p>Cuando llegue un nuevo punto, podemos evaluar a que lado del hiperplano esta. Dependiendo de a que lado este, lo podemos clasificar (como rojo o azul en este caso).</p>
+<ul>
+<li>El problema es que muchos hiperplanos logran dividir el espacio en 2. ¿Cuál será el mejor? ¿Cómo lo logramos encontrar? ¿Qué factores afectan su posición?</li>
+</ul>
+</section>
+<section id="frontera-de-decisión-svm" class="level3" data-number="5.4.3">
+<h3 data-number="5.4.3" class="anchored" data-anchor-id="frontera-de-decisión-svm"><span class="header-section-number">5.4.3</span> Frontera de Decisión SVM</h3>
+<p>A cada posible hiperplano que cumpla las condiciones, le dibujaremos un margen equidistante a ambos lados hasta tocar el primer punto del espacio.</p>
+<p>Diremos que el mejor hiperplano es aquel que tenga el margen mas grande posible. Esto lo podemos denominar el método del “ancho de avenida”.</p>
+<p><img src="images/fontera_svm.png" class="img-fluid" width="720" alt="Fronteras de división equidistante a ambos lados"> Entre el hiperplano representado por la ecuación de la recta de color naranjo tiene un margen mas grande que el rosado; por lo tanto esta dividiendo el espacio de mejor forma. Los “vectores de soporte” son los puntos que tienen contado con los márgenes del hiperplano.</p>
+</section>
+<section id="optimización-svm" class="level3 page-columns page-full" data-number="5.4.4">
+<h3 data-number="5.4.4" class="anchored" data-anchor-id="optimización-svm"><span class="header-section-number">5.4.4</span> Optimización SVM</h3>
+<p>El problema es de minimización de tipo convexo cuadrático, con muchas restricciones lineales de inigualdades. Con <span class="math inline">p+1</span> parámetros (<span class="math inline">p</span> es la dimensionalidad de la data) y <span class="math inline">n</span> restricciones (una restricción por cada entidad). <img src="images/svm_min.png" class="img-fluid" width="420" alt="Optimización como minimización de SVM"></p>
+<p>En este caso podemos usar el método de optimización de Lagrange para maximizar una nueva función y no preocuparnos de las restricciones. Las restricciones serán reemplazadas por multiplicadores de Lagrange y el proceso de aprendizaje será dictado por productos puntos.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/svm_max.png" class="img-fluid figure-img" width="220"></p>
+<p></p><figcaption class="figure-caption margin-caption">Optimización de Lagrange para mazimizar una nueva función</figcaption><p></p>
+</figure>
+</div>
+<p><strong>Lagrangiano</strong></p>
+<p>Definición de L:</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/def_L_svm.png" class="img-fluid figure-img" width="420"></p>
+<p></p><figcaption class="figure-caption margin-caption">Definición de L</figcaption><p></p>
+</figure>
+</div>
+<p>Configuración de gradientes de L respecto a incógnitas (W y b):</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/conf_gradientes.png" class="img-fluid figure-img" width="420"></p>
+<p></p><figcaption class="figure-caption margin-caption">Configuración de gradientes</figcaption><p></p>
+</figure>
+</div>
+<p>Restricción de no-negatividad de los multiplicadores de Lagrange:</p>
+<p><span class="math display">\alpha \geq 0 \space \forall i \in \{1,2, .., n\} </span></p>
+</section>
+<section id="interpretación-geométrica-svm" class="level3 page-columns page-full" data-number="5.4.5">
+<h3 data-number="5.4.5" class="anchored" data-anchor-id="interpretación-geométrica-svm"><span class="header-section-number">5.4.5</span> Interpretación geométrica SVM</h3>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/geom_svm.png" class="img-fluid figure-img" width="720"></p>
+<p></p><figcaption class="figure-caption margin-caption">Interpretación geométrica de Support Vector Machine</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="caso-no-separable-svm" class="level3 page-columns page-full" data-number="5.4.6">
+<h3 data-number="5.4.6" class="anchored" data-anchor-id="caso-no-separable-svm"><span class="header-section-number">5.4.6</span> Caso no separable SVM</h3>
+<p>SVM, como lo hemos visto hasta ahora tiene un primer problema. No siempre se puede dividir el espacio con un hiperplano que cumpla las condiciones:</p>
+<p><span class="math display">y_i(w \cdot X_i+b)-1 \geq 0</span></p>
+<ul>
+<li>Para solventar esto, podemos agregar a SVM una “holgura”, que permita soportar una determinada cantidad de puntos en el incorrecto lado de la calle; con el fin de lograr generar el hiperplano.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/paste-837832D0.png" class="img-fluid figure-img" width="320"></p>
+<p></p><figcaption class="figure-caption margin-caption">Caso no separable</figcaption><p></p>
+</figure>
+</div>
+<p>Al someter la nueva función de optimización, con sus restricciones, al Lagrange, obtenemos un resultado prácticamente igual:</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/paste-AA7EB7BD.png" class="img-fluid figure-img" width="520"></p>
+<p></p><figcaption class="figure-caption margin-caption">Optimización para el caso no separable</figcaption><p></p>
+</figure>
+</div>
+<p><strong>Sensibilidad de C</strong></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/paste-4A2B6F85.png" class="img-fluid figure-img" width="720"></p>
+<p></p><figcaption class="figure-caption margin-caption">Sensibilidad de C</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="limitaciones-svm-clásico" class="level3" data-number="5.4.7">
+<h3 data-number="5.4.7" class="anchored" data-anchor-id="limitaciones-svm-clásico"><span class="header-section-number">5.4.7</span> Limitaciones SVM clásico</h3>
+<p>Imagina que aplicamos SVM sobre el próximo problema. Puedes seleccionar cualquier C que quieras. Dibuja la mejor línea de separación.</p>
+<p><img src="images/paste-9E393FAA.png" class="img-fluid"></p>
+<ul>
+<li></li>
+<li><p>Aunque hay claramente 2 clases distintas, no podemos dividir el espacio con el hiperplano de ninguna manera que nos de un buen resultado.</p></li>
+<li><p>Es un problema donde necesitamos dividir el espacio de una manera no lineal.</p></li>
+</ul>
+<p><strong>Truco del Kernel</strong></p>
+<p>SVM normal funciona bien para DataSet que se pueden dividir linealmente (aunque tengan un poco de ruido, para eso usamos C):</p>
+<p><img src="images/paste-A4871850.png" class="" width="520" height="64"></p>
+<p>¿Pero que hacemos con data set donde no podemos separar linealmente?</p>
+<p><img src="images/paste-96EDA0B5.png" class="img-fluid" width="520"></p>
+<p>“Mapeamos” o transformamos el DataSet a un dimensión mayor, y en ese lugar buscamos si podemos encontrar un hiperplano y aplicar SVM.</p>
+<p><img src="images/paste-D2C34F70.png" class="img-fluid" width="520"></p>
+<p>Nuestro nuevo problema de optimización, considerando una función de Kernel se ve así:</p>
+<p><img src="images/paste-3365657B.png" class="img-fluid" width="520"></p>
+<p>Existen cientos de Kernels, distintos (es un área de estudio académico):</p>
+<ul>
+<li>Linear =&gt; <span class="math inline">K(x_i,x_j) = x_i^Tx_j</span></li>
+<li>Polynomial kernel with degree d =&gt; <span class="math inline">K(x_i,x_j)</span> = <span class="math inline">(x_i^T x_j+1)^d</span></li>
+<li>Radial basis function kernel with width <span class="math inline">\sigma</span> =&gt; <span class="math inline">K(x_i,x_j)</span> = <span class="math inline">exp(-||x_i-x_j||^2/(2\sigma^2))</span></li>
+<li>Sigmoid with parameter <span class="math inline">κ</span> and θ =&gt; <span class="math inline">K(x_i,x_j)</span> = <span class="math inline">tanh(κ*x_i^T x_j + θ)</span></li>
+</ul>
+</section>
+<section id="debilidades-y-fortalezas-svm" class="level3" data-number="5.4.8">
+<h3 data-number="5.4.8" class="anchored" data-anchor-id="debilidades-y-fortalezas-svm"><span class="header-section-number">5.4.8</span> Debilidades y fortalezas SVM</h3>
+<p>Debilidades:</p>
+<ul>
+<li>El proceso de entrenamiento y prueba es lento, debido a tener que solucionar un problema de Lagrange.</li>
+<li>En casi todas sus variedades solo puede clasificar de manera binaria (+1,-1)</li>
+<li>Muy sensitivo al ruido.</li>
+<li>Lo peor: lograr escoger la función de Kernel correcta.</li>
+</ul>
+<p>Fortalezas:</p>
+<ul>
+<li>El entrenamiento es fácil, la solución es única y global para todo el espacio.</li>
+<li>SVM no sufre de la maldición de la dimensionalidad !</li>
+<li>No se genera sobretratamiento de manera muy fácil.</li>
+<li>Fácil de entender de manera geométrica.</li>
+</ul>
+</section>
+<section id="modelos-ensamblados" class="level3 page-columns page-full" data-number="5.4.9">
+<h3 data-number="5.4.9" class="anchored" data-anchor-id="modelos-ensamblados"><span class="header-section-number">5.4.9</span> Modelos Ensamblados</h3>
+<section id="dilema-sesgo-varianza" class="level4 page-columns page-full" data-number="5.4.9.1">
+<h4 data-number="5.4.9.1" class="anchored" data-anchor-id="dilema-sesgo-varianza"><span class="header-section-number">5.4.9.1</span> Dilema sesgo-varianza</h4>
+<p><strong>El error de predicción de cualquier modelo de machine learning puede ser separado en tres términos:</strong></p>
+<ul>
+<li>Varianza/Variance: ¿qué tan factible es que cambia nuestra predicción si usamos otro set de datos?. Se relaciona a la complejidad del modelo.</li>
+<li>Ruido/Noise: error base imposible de reducir (variables desconocidas, problemas de adquisición de datos, etc).</li>
+<li>Sesgo/Bias: ¿qué tan lejana es nuestra predicción promedio con respecto al verdadero valor? Se relaciona a la suposiciones/simplicidad del modelo.</li>
+</ul>
+<p><img src="images/paste-E05E1664.png" class="img-fluid" width="720"></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/paste-1364BE41.png" class="img-fluid figure-img" width="420"></p>
+<p></p><figcaption class="figure-caption margin-caption">Sesgo/varianza</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="images/paste-C784888C.png" class="img-fluid figure-img" width="520"></p>
+<p></p><figcaption class="figure-caption margin-caption">Relaciones en un modelo</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="introducción" class="level4" data-number="5.4.9.2">
+<h4 data-number="5.4.9.2" class="anchored" data-anchor-id="introducción"><span class="header-section-number">5.4.9.2</span> Introducción</h4>
+<p>Es muy difícil construir un solo modelo que obtenga un buen rendimiento (bajo sesgo y varianza).</p>
+<p>Enfoque: construyamos múltiples modelos “complejos” o “sencillos” con el mismo o distinto set de datos y combinemos sus predicciones.</p>
+<p>Objetivo: obtener “un modelo final” con bajo error de sesgo y varianza.</p>
+<ul>
+<li>Modelos complejos =&gt; bajo error de sesgo y alto error de varianza. Combinación de predicciones =&gt; bajar la varianza de la predicción.</li>
+<li>Modelos sencillos =&gt; alto error de sesgo y bajo error de varianza. Combinación de predicciones =&gt; mantendría el alto sesgo, excepto que los modelos se enfoquen en los puntos mal clasificados.</li>
+</ul>
+<p><img src="images/paste-89C0E4AE.png" class="img-fluid"></p>
+</section>
+<section id="problema-multi-clase" class="level4" data-number="5.4.9.3">
+<h4 data-number="5.4.9.3" class="anchored" data-anchor-id="problema-multi-clase"><span class="header-section-number">5.4.9.3</span> Problema multi-clase</h4>
+<p>Problemas con múltiple clases son usualmente complejos. Un problema multi-clase se puede simplificar a múltiples problemas binarios</p>
+<ul>
+<li>Un problema con m clases puede ser resuelto con m modelos, calculando <span class="math inline">P(C_i|M_i)</span>, donde Mi es un modelo binario para la clase i.</li>
+<li>Un problema con m clases puede ser resuelto con <span class="math inline">\frac{m(m-1)}{2}</span> modelos, donde cada modelo se enfoca solo entre dos clases.</li>
+</ul>
+<p>La predicción final estará dada por:</p>
+<ul>
+<li>Mayor probabilidad.</li>
+<li>Mayoría.</li>
+<li>Voto ponderado.</li>
+</ul>
+<p><img src="images/paste-461D91B7.png" class="img-fluid" width="720"></p>
+</section>
+<section id="bootstrap-aggregating-bagging" class="level4" data-number="5.4.9.4">
+<h4 data-number="5.4.9.4" class="anchored" data-anchor-id="bootstrap-aggregating-bagging"><span class="header-section-number">5.4.9.4</span> Bootstrap aggregating (Bagging)</h4>
+<p><img src="images/paste-D8DE4EDD.png" class="img-fluid"></p>
+</section>
+<section id="bagging" class="level4" data-number="5.4.9.5">
+<h4 data-number="5.4.9.5" class="anchored" data-anchor-id="bagging"><span class="header-section-number">5.4.9.5</span> Bagging</h4>
+<p>Dado un set de entrenamiento <span class="math inline">D={(x1,y1),..., (xN,yN)}</span>, y <span class="math inline">M</span> modelos</p>
+<p>For m in range(M):</p>
+<p>Obtener una muestra bootstrap (samplear con repetición N puntos) del set de datos D, generando la muestra Dm. Aprender el modelo Mm de Dm</p>
+<p>Para clasificar el punto xt se aplica cada uno de los M modelos (M1,M2,…,Mm) a xt y se considera la clase con más votos o un promedio (ponderado).</p>
+<p>Los modelos tienen errores no correlacionados debido a la diversidad de puntos en cada muestra bootstrap</p>
+<p>Ejemplo</p>
+<p><img src="images/paste-B98BAD96.png" class="img-fluid"></p>
+</section>
+<section id="random-forest" class="level4" data-number="5.4.9.6">
+<h4 data-number="5.4.9.6" class="anchored" data-anchor-id="random-forest"><span class="header-section-number">5.4.9.6</span> Random forest</h4>
+<p>Uno de los modelos de ensamblados más conocidos es el random forest, el cual es un ensamblado de árboles de decisión.</p>
+<p><img src="images/paste-78EFF4F9.png" class="img-fluid"></p>
+<ul>
+<li>El proceso de combinación puede ser promedio simple o mayoría.</li>
+<li>Cada árbol de decisión será “distinto” (limitando el número de variables) en comparación a un puro árbol de decisión.</li>
+<li>El uso de múltiples árboles “distintos” y complejos nos permite reducir la componente de la varianza del error.</li>
+</ul>
+</section>
+<section id="boosting" class="level4" data-number="5.4.9.7">
+<h4 data-number="5.4.9.7" class="anchored" data-anchor-id="boosting"><span class="header-section-number">5.4.9.7</span> Boosting</h4>
+<p><img src="images/paste-EF5C66BD.png" class="img-fluid"></p>
+<p>Asignar a cada punto de entrenamiento <span class="math inline">D={(x_1,y_1),..., (x_N,y_N)}</span>, un peso igual a <span class="math inline">w_i = 1/N</span>, obteniendo el vector de probabilidades <span class="math inline">w</span>.</p>
+<p>For m in range(M):</p>
+<ul>
+<li>Generar Dm usando los pesos w Aprender el modelo Mm de Dm</li>
+<li>Calcular el error de Mm y cambiar los pesos wi de los puntos incorrectamente clasificados</li>
+<li>Normalizar los pesos wi para que sumen 1</li>
+<li>Estimar la importancia del modelo 𝛂m basado en los errores</li>
+<li>Para clasificar el punto xt se aplica cada uno de los M modelos (M1,M2,…,Mm) a xt y se considera un promedio ponderado usando 𝛂m.</li>
+</ul>
+</section>
+<section id="adaboost" class="level4" data-number="5.4.9.8">
+<h4 data-number="5.4.9.8" class="anchored" data-anchor-id="adaboost"><span class="header-section-number">5.4.9.8</span> Adaboost</h4>
+<p>Uno de los algoritmos más famosos de boosting es adaboost, el cual es un ensamblado de modelos sencillos, donde:</p>
+<p><img src="images/paste-7FB611CA.png" class="img-fluid"></p>
+<ul>
+<li>La predicción final es realizada con un promedio ponderado, basado en el error del modelo.</li>
+<li>Cada modelo será sencillo (obteniendo un alto sesgo).</li>
+<li>El uso de modelos sencillos reduce la varianza del error.</li>
+<li>El foco en puntos mal clasificados reduce el sesgo del error.</li>
+</ul>
+<p><img src="images/paste-9FAEEE6F.png" class="img-fluid"></p>
+<p>Ejemplo:</p>
+<p>Primera Iteración</p>
+<p><img src="images/paste-E1546BA3.png" class="img-fluid"></p>
+<p>Segunda Iteración</p>
+<p><img src="images/paste-A6694BD1.png" class="img-fluid"></p>
+<p>Final</p>
+<p><img src="images/paste-C15B5E01.png" class="img-fluid"></p>
+</section>
+<section id="gradient-boosting" class="level4" data-number="5.4.9.9">
+<h4 data-number="5.4.9.9" class="anchored" data-anchor-id="gradient-boosting"><span class="header-section-number">5.4.9.9</span> Gradient boosting</h4>
+<p>Gadient boosting, a diferencia de los modelos previos, se enfoca en predecir en forma correcta los errores de los modelos anteriores.</p>
+<p><img src="images/paste-17ECB4C6.png" class="img-fluid"></p>
+<ul>
+<li>La predicción final corresponde a la suma de todos los modelos.</li>
+<li>Cada modelo será sencillo (obteniendo un alto sesgo).</li>
+<li>El uso de modelos sencillos reduce la varianza del error.</li>
+<li>El foco en los errores de clasificaciones previas reduce el sesgo del error. Sin embargo, esto puede causar sobreentrenamiento.</li>
+</ul>
+<p>Algoritmo de Gradiente Boosting</p>
+<p><img src="images/paste-083A13C7.png" class="img-fluid"></p>
+</section>
+<section id="regressor-tree" class="level4" data-number="5.4.9.10">
+<h4 data-number="5.4.9.10" class="anchored" data-anchor-id="regressor-tree"><span class="header-section-number">5.4.9.10</span> Regressor tree</h4>
+<p>Un regressor tree es un árbol de decisión enfocado a regresión, donde cada separación busca generar grupos similares de datos.</p>
+<p>En vez de “gini” o “entropy” el criterio a minimizar es el “squared_error” que corresponde al error cuadrático medio (otro criterios existen).</p>
+<p>En la práctica esto es equivalente a buscar una separación que minimice la varianza de los datos dentro de cada hoja. La “clasificación” final corresponde al promedio de los datos de cada hoja.</p>
+<p><img src="images/paste-063F1621.png" class="img-fluid"></p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./resumen_cluster.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Resumen de Cluster</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./summary.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright 2022, Denis Berroeta</div>   
+  </div>
+</footer>
+
+
+
+</body></html>
